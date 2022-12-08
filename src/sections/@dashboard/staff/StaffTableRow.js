@@ -19,10 +19,9 @@ StaffTableRow.propTypes = {
   row: PropTypes.object,
   index: PropTypes.number,
   onEditRow: PropTypes.func,
-  onDeleteRow: PropTypes.func,
 };
 
-export default function StaffTableRow({ row, index, onEditRow, onDeleteRow, }) {
+export default function StaffTableRow({ row, index, onEditRow, }) {
   const theme = useTheme();
 
   const { status, name, profile, contact_no, designation, city, _id } = row;
@@ -119,18 +118,6 @@ export default function StaffTableRow({ row, index, onEditRow, onDeleteRow, }) {
           onClose={handleClosePopover}
           arrow="right-top"
           sx={{ width: 140 }}>
-
-          <MenuItem
-            onClick={() => {
-              handleOpenConfirm();
-              handleClosePopover();
-            }}
-            sx={{ color: 'error.main' }}
-          >
-            <Iconify icon="eva:trash-2-outline" />
-            Delete
-          </MenuItem>
-
           <MenuItem
             onClick={() => {
               onEditRow();
@@ -142,20 +129,6 @@ export default function StaffTableRow({ row, index, onEditRow, onDeleteRow, }) {
           </MenuItem>
         </MenuPopover>
 
-        <ConfirmDialog
-          open={openConfirm}
-          onClose={handleCloseConfirm}
-          title="Delete"
-          content="Are you sure want to delete?"
-          action={
-            <Button variant="contained" color="error" onClick={(e) => {
-              onDeleteRow(e);
-              handleCloseConfirm()
-            }}>
-              Delete
-            </Button>
-          }
-        />
       </TableCell>
     </TableRow>
   );

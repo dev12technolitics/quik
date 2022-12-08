@@ -20,7 +20,7 @@ BrandTableRow.propTypes = {
   onDeleteRow: PropTypes.func,
 };
 
-export default function BrandTableRow({ row, index, onEditRow, onDeleteRows}) {
+export default function BrandTableRow({ row, index, onEditRow, onDeleteRow}) {
   const theme = useTheme();
 
   const { name, logo , _id, status} = row;
@@ -133,7 +133,7 @@ export default function BrandTableRow({ row, index, onEditRow, onDeleteRows}) {
           title="Delete"
           content="Are you sure want to delete?"
           action={
-            <Button variant="contained" color="error" onClick= {(e)=>{onDeleteRows(e);
+            <Button variant="contained" color="error" onClick= {(e)=>{onDeleteRow(e);
               handleCloseConfirm()
                
               }}>

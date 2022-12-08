@@ -41,8 +41,6 @@ import {
     TablePaginationCustom,
     TableSkeleton
 } from '../../../components/table';
-// sections
-
 import { StaffTableToolbar, StaffTableRow } from '../../../sections/@dashboard/staff';
 import { getstaff, deletestaff } from '../../../../src/redux/slices/staff';
 import { useSelector, useDispatch } from '../../../redux/store';
@@ -145,17 +143,7 @@ export default function Staff() {
         setFilterName(event.target.value);
     };
 
-    const handleDeleteRow = (id) => {
-        const deleteRow = tableData.filter((row) => row.id !== id);
-        setSelected([]);
-        setTableData(deleteRow);
-        if (page > 0) {
-            if (dataInPage.length < 2) {
-                setPage(page - 1);
-            }
-        }
-    };
-
+  
     const handleEditRow = (id) => {
         push(`/dashboard/staff/add/${id}`);
     };
@@ -216,7 +204,6 @@ export default function Staff() {
                                                     key={row.id}
                                                     row={row}
                                                     index={index}
-                                                    onDeleteRow={() => handleDeleteRow(row._id)}
                                                     onEditRow={() => handleEditRow(row._id)}
                                                 />
                                             ) : (
