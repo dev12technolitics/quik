@@ -42,7 +42,7 @@ import {
     TableSkeleton
 } from '../../../components/table';
 import { BrandTableRow } from '../../../sections/@dashboard/brand';
-import { getBrand, deleteBrand } from '../../../../src/redux/slices/brand';
+import { getBrand, deleteBrand } from '../../../redux/slices/brand';
 import { useSelector, useDispatch } from '../../../redux/store';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
@@ -135,27 +135,27 @@ export default function Brand() {
     };
 
     const handleEditRow = (id) => {
-        push(`/dashboard/brand/add/${id}`);
+        push(`/dashboard/mobilebrand/add/${id}`);
     };
 
     return (
         <>
             <Head>
-                <title>Brand Management</title>
+                <title>Mobile Brand</title>
             </Head>
             <Container maxWidth={themeStretch ? false : 'lg'}>
                 <CustomBreadcrumbs
-                    heading="Brand Management"
+                    heading="Mobile Brand"
                     links={[
                         { name: 'Dashboard', href: PATH_DASHBOARD.root },
-                        { name: 'Brand Management', href: PATH_DASHBOARD.brand.view },
-                        { name: 'Brand List' }
+                        { name: 'Mobile Brand', href: PATH_DASHBOARD.mobilebrand.view },
+                        { name: 'Mobile Brand List' }
                     ]}
 
                     action={
-                        <NextLink href={PATH_DASHBOARD.brand.add} passHref>
+                        <NextLink href={PATH_DASHBOARD.mobilebrand.add} passHref>
                             <Button variant="contained" startIcon={<Iconify icon="eva:plus-fill" />}>
-                                New Brand
+                                New Mobile Brand
                             </Button>
                         </NextLink>
                     }

@@ -35,6 +35,14 @@ const ICONS = {
   dealerIocn: icon('ic_dealerIocn'),
   brandIocn: icon('ic_brandIocn'),
   cityIcon: icon('ic_cityIcon'),
+  resaleIocn: icon('ic_resaleIocn'),
+  laptopIcon: icon('ic_laptopIcon'),
+  mobileIcon: icon('ic_mobileIcon'),
+  coponIocn: icon('ic_coponIocn'),
+  customerIocn: icon('ic_customerIocn'),
+  laptoprepairIocn: icon('ic_laptoprepairIocn'),
+  pcrepairIocn: icon('ic_pcrepairIocn'),
+  mobilerepairIocn: icon('ic_mobilerepairIocn'),
 };
 
 const navConfig = [
@@ -54,6 +62,18 @@ const navConfig = [
     items: [
       { title: "Contact Enquiry", path: PATH_DASHBOARD.contact.view, icon: ICONS.contacticon },
       { title: 'Dealer Enquiry', path: PATH_DASHBOARD.dealer.view, icon: ICONS.dealerIocn },
+      { title: 'Resale Request', path: PATH_DASHBOARD.resalerequest.view, icon: ICONS.resaleIocn },
+      { title: 'Laptop Repair', path: PATH_DASHBOARD.laptoprepair.view, icon: ICONS.laptoprepairIocn },
+      { title: 'PC Repair', path: PATH_DASHBOARD.pcrepair.view, icon: ICONS.pcrepairIocn },
+      { title: 'Mobiler Repair', path: PATH_DASHBOARD.mobilerepair.view, icon: ICONS.mobilerepairIocn },
+    ],
+  },
+
+  {
+    subheader: 'COMMUNICATIONS',
+    items: [
+      { title: "Testimonial", path: PATH_DASHBOARD.testimonials.view, icon: ICONS.dashboard },
+      { title: 'Blog And Updates', path: PATH_DASHBOARD.blogmanagement.view, icon: ICONS.blog },
     ],
   },
 
@@ -61,9 +81,10 @@ const navConfig = [
     subheader: 'CONFIGURATION',
     items: [
       { title: "City Management", path: PATH_DASHBOARD.city.view, icon: ICONS.cityIcon },
-      { title: 'Brand Management', path: PATH_DASHBOARD.brand.view, icon: ICONS.brandIocn },
+      { title: "laptop Brand", path: PATH_DASHBOARD.laptopbrand.view, icon: ICONS.laptopIcon },
+      { title: 'Mobile Brand', path: PATH_DASHBOARD.mobilebrand.view, icon: ICONS.mobileIcon },
       { title: 'Customer Management ', path: PATH_DASHBOARD.customer.view, icon: ICONS.customerIocn },
-      { title: 'Coupons', path: PATH_DASHBOARD.coupons.view, icon: ICONS.customerIocn },
+      { title: 'Coupons', path: PATH_DASHBOARD.coupons.view, icon: ICONS.coponIocn },
     ],
   },
 

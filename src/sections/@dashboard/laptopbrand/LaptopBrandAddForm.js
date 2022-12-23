@@ -14,7 +14,7 @@ import FormProvider, {
     RHFUpload,
     RHFTextField,
 } from '../../../components/hook-form';
-import { postbrand, putbrand } from "../../../redux/slices/brand";
+import { postlaptopbrand, putlaptopbrand } from "../../../redux/slices/laptopbrand";
 
 const LabelStyle = styled(Typography)(({ theme }) => ({
     ...theme.typography.subtitle2,
@@ -27,27 +27,29 @@ BrandAddForm.propTypes = {
     oneposts: PropTypes.object,
 };
 
-export default function BrandAddForm({ isEdit = false, oneBrand, id }) {
+export default function BrandAddForm({ isEdit = false, onelaptopbrand, id }) {
 
     const { push } = useRouter();
     const dispatch = useDispatch();
     const [isLoading, setisLoading] = useState(false);
+
     const [filterStartDate, setFilterStartDate] = useState(new Date());
+
     const [typesObject, setTypesObject] = useState(null);
 
     const [filter, setFilter] = useState('');
 
     const NewProductSchema = Yup.object().shape({
-        name: Yup.string().required('Name is required'),
+        brand_name: Yup.string().required('Brand Name is required'),
         logo: Yup.mixed().test('required', 'Logo is required', (value) => value !== ''),
     });
 
     const defaultValues = useMemo(
         () => ({
-            name: oneBrand?.name ? oneBrand?.name : '',
-            logo: oneBrand?.logo ? oneBrand.logo : '',
+            brand_name: onelaptopbrand?.brand_name ? onelaptopbrand?.brand_name : '',
+            logo: onelaptopbrand?.logo ? onelaptopbrand.logo : '',
         }),
-        [oneBrand]
+        [onelaptopbrand]
     );
 
     const methods = useForm({
@@ -67,21 +69,21 @@ export default function BrandAddForm({ isEdit = false, oneBrand, id }) {
     const values = watch();
 
     useEffect(() => {
-        if (isEdit && oneBrand) {
+        if (isEdit && onelaptopbrand) {
             reset(defaultValues);
         } else {
             reset(defaultValues);
         }
-    }, [isEdit, oneBrand]);
+    }, [isEdit, onelaptopbrand]);
 
     const onSubmit = async (data) => {
         setisLoading(true);
         try {
             await new Promise((resolve) => setTimeout(resolve, 500));
             let formData = new FormData();
-            formData.set('name', data.name);
+            formData.set('brand_name', data.brand_name);
             formData.append('logo', data.logo);
-            isEdit ? dispatch(putbrand(id, formData, toast, push, reset, setisLoading)) : dispatch(postbrand(formData, toast, push, reset, setisLoading));
+            isEdit ? dispatch(putlaptopbrand(id, formData, toast, push, reset, setisLoading)) : dispatch(postlaptopbrand(formData, toast, push, reset, setisLoading));
         }
         catch (error) {
             console.error(error);
@@ -111,7 +113,7 @@ export default function BrandAddForm({ isEdit = false, oneBrand, id }) {
                 <Grid item xs={12} md={8}>
                     <Card sx={{ p: 3 }}>
                         <Stack spacing={3}>
-                            <RHFTextField name="name" label="Name" />
+                            <RHFTextField name="brand_name" label="Brand Name" />
 
                             <Stack spacing={1}>
                                 <Typography variant="subtitle2" sx={{ color: 'text.secondary' }}>

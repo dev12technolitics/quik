@@ -5,10 +5,10 @@ import { dispatch } from '../store';
 const initialState = {
     isLoading: false,
     error: null,
-    allBrand: [],
+    alllaptopbrand: [],
     deleteStatus: false,
     Addbrand: {},
-    oneBrand: {},
+    onelaptopbrand: {},
 };
 
 const accessToken = typeof window !== 'undefined' ? localStorage.getItem('accessToken') : '';
@@ -21,7 +21,7 @@ const jsonheader = {
     'x-access-token': accessToken,
 };
 const slice = createSlice({
-    name: 'brand',
+    name: 'laptopbrand',
     initialState,
     reducers: {
         // START LOADING
@@ -35,15 +35,15 @@ const slice = createSlice({
             state.error = action.payload;
         },
 
-        // GET brand
-        getBrandSuccess(state, action) {
+      // GET Laptop brand 
+        getLaptopbrandSuccess(state, action) {
             state.isLoading = false;
-            state.allBrand = action.payload;
+            state.alllaptopbrand  = action.payload;
         },
 
-        getOneBrandSuccess(state, action) {
+        getOneLaptopSuccess(state, action) {
             state.isLoading = false;
-            state.oneBrand = action.payload;
+            state.onelaptopbrand = action.payload;
         },
 
         // Add update brand
@@ -52,8 +52,8 @@ const slice = createSlice({
             state.Addbrand = action.payload;
         },
 
-        // delete brand
-        deleteBrandSuccess(state, action) {
+        // delete Laptopbrand
+        deleteLaptopbrandSuccess(state, action) {
             state.isLoading = false;
             state.deleteStatus = action.payload;
         },
@@ -61,40 +61,40 @@ const slice = createSlice({
 });
 export default slice.reducer;
 
-// GET brand
-export function getBrand() {
+// GET Laptop brand 
+export function getLaptopbrand() {
     return async () => {
         dispatch(slice.actions.startLoading());
         try {
-            const response = await axios.get('/brand/all', { headers: header });
-            dispatch(slice.actions.getBrandSuccess(response.data.brands));
+            const response = await axios.get('/laptop/all', { headers: header });
+            dispatch(slice.actions.getLaptopbrandSuccess(response.data.laptop));
         } catch (error) {
             dispatch(slice.actions.hasError(error));
         }
     };
 }
 
-export function getOneBrand(id) {
+export function getOneLaptop(id) {
     return async () => {
         dispatch(slice.actions.startLoading());
         try {
-            const response = await axios.get('/brand/one/' + id, { headers: header });
-            dispatch(slice.actions.getOneBrandSuccess(response.data.brand));
+            const response = await axios.get('/laptop/one/' + id, { headers: header });
+            dispatch(slice.actions.getOneLaptopSuccess(response.data.laptopbrand));
         } catch (error) {
             dispatch(slice.actions.hasError(error));
         }
     };
 }
 
-export function postbrand(data, toast, push, reset, setisLoading) {
+export function postlaptopbrand(formData, toast, push, reset, setisLoading) {
     return async () => {
         try {
-            const response = await axios.post('/brand/add', data, { headers: header });
+            const response = await axios.post('/laptop/add', formData, { headers: header });
             console.log('response==', response);
             if (response.data?.status == true) {
                 setisLoading(false);
                 toast.success(response.data?.message);
-                push('/dashboard/mobilebrand');
+                push('/dashboard/laptopbrand');
             } else {
                 setisLoading(false);
                 toast.error(response.data?.message);
@@ -106,14 +106,14 @@ export function postbrand(data, toast, push, reset, setisLoading) {
     };
 }
 
-export function putbrand(id, data, toast, push, reset, setisLoading) {
+export function putlaptopbrand(id, formData, toast, push, reset, setisLoading) {
     return async () => {
         try {
-            const response = await axios.put('/brand/update/' + id, data);
+            const response = await axios.put('/laptop/update/' + id, formData);
             if (response.data?.status == true) {
                 setisLoading(false);
                 toast.success(response.data?.message);
-                push('/dashboard/mobilebrand');
+                push('/dashboard/laptopbrand');
             } else {
                 setisLoading(false);
                 toast.error(response.data?.message);
@@ -126,13 +126,13 @@ export function putbrand(id, data, toast, push, reset, setisLoading) {
 }
 
 
-// delete brand
-export function deleteBrand(id, toast) {
+// delete Laptopbrand
+export function deleteLaptopbrand(id, toast) {
     return async () => {
         dispatch(slice.actions.startLoading());
         try {
-            const response = await axios.delete('/brand/delete/' + id, { headers: header });
-            dispatch(slice.actions.deleteBrandSuccess(response.data.status));
+            const response = await axios.delete('/laptop/delete/' + id, { headers: header });
+            dispatch(slice.actions.deleteLaptopbrandSuccess(response.data.status));
             toast.success(response.data?.message);
         } catch (error) {
             toast.error(error?.message);

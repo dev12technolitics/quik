@@ -30,15 +30,15 @@ export default function EditPage() {
     return (
         <>
             <Head>
-                <title>Brand: Edit Brand</title>
+                <title>Mobile Brand: Edit Mobile Brand</title>
             </Head>
 
             <Container maxWidth={themeStretch ? false : 'lg'}>
                 <CustomBreadcrumbs
-                    heading="Edit Brand"
+                    heading="Edit Mobile Brand"
                     links={[
                         { name: 'Dashboard', href: PATH_DASHBOARD.root },
-                        { name: 'Brand Management', href: PATH_DASHBOARD.brand.view },
+                        { name: 'Mobile Brand', href: PATH_DASHBOARD.mobilebrand.view },
                         { name: oneBrand?.ban_title },
                     ]}
                 />

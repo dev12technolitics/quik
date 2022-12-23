@@ -96,6 +96,12 @@ export const PATH_DASHBOARD = {
     demoView: path(ROOTS_DASHBOARD, '/blog/post/apply-these-7-secret-techniques-to-improve-event'),
   },
 //.................Process Managment..............
+
+laptopbrand: {
+  view: path(ROOTS_DASHBOARD, '/laptopbrand'),
+  add: path(ROOTS_DASHBOARD, '/laptopbrand/add'),
+},
+
 staff: {
   view: path(ROOTS_DASHBOARD, '/staff'),
   add: path(ROOTS_DASHBOARD, '/staff/add'),
@@ -119,6 +125,10 @@ contact:{
   view :path(ROOTS_DASHBOARD,'/contact'),
 },
 
+resalerequest:{
+  view :path(ROOTS_DASHBOARD,'/resalerequest'),
+},
+
 city:{
   view :path(ROOTS_DASHBOARD,'/city'),
   add :path(ROOTS_DASHBOARD,'/city/add'),
@@ -129,9 +139,9 @@ coupons:{
   add :path(ROOTS_DASHBOARD,'/coupons/add'),
 },
 
-brand:{
-  view :path(ROOTS_DASHBOARD,'/brand'),
-  add :path(ROOTS_DASHBOARD,'/brand/add'),
+mobilebrand:{
+  view :path(ROOTS_DASHBOARD,'/mobilebrand'),
+  add :path(ROOTS_DASHBOARD,'/mobilebrand/add'),
 },
 
 customer:{
@@ -149,6 +159,27 @@ department:{
   add :path(ROOTS_DASHBOARD,'/department/add'),
 },
 
+testimonials: {
+  view: path(ROOTS_DASHBOARD, '/testimonials'),
+  add: path(ROOTS_DASHBOARD, '/testimonials/add'),
+},
+
+laptoprepair: {
+  view: path(ROOTS_DASHBOARD, '/laptoprepair'),
+},
+
+mobilerepair: {
+  view: path(ROOTS_DASHBOARD, '/mobilerepair'),
+},
+
+pcrepair: {
+  view: path(ROOTS_DASHBOARD, '/pcrepair'),
+},
+
+blogmanagement: {
+  view: path(ROOTS_DASHBOARD, '/blogmanagement'),
+  add: path(ROOTS_DASHBOARD, '/blogmanagement/add'),
+},
 
 
 };

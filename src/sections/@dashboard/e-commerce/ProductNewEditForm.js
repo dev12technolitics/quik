@@ -164,7 +164,6 @@ export default function ProductNewEditForm({ isEdit, currentProduct }) {
                 <Typography variant="subtitle2" sx={{ color: 'text.secondary' }}>
                   Description
                 </Typography>
-
                 <RHFEditor simple name="description" />
               </Stack>
 

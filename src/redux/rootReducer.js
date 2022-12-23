@@ -19,6 +19,13 @@ import cityReducer from './slices/city';
 import brandReducer from './slices/brand';
 import customerReducer from './slices/customer';
 import couponsReducer from './slices/coupons';
+import laptopbrandReducer from './slices/laptopbrand';
+import resalerequestReducer from './slices/resalerequest';
+import testimonialReducer from './slices/testimonial';
+import blogmanagementReducer from './slices/blogmanagement';
+import pcrepairReducer from './slices/pcrepair';
+import laptoprepairReducer from './slices/laptoprepair';
+import mobilerepairReducer from './slices/mobilerepair';
 // ----------------------------------------------------------------------
 
 const createNoopStorage = () => ({
@@ -66,6 +73,13 @@ const rootReducer = combineReducers({
   brand:brandReducer,
   customer:customerReducer,
   coupons:couponsReducer,
+  laptopbrand:laptopbrandReducer,
+  resalerequest:resalerequestReducer,
+  testimonial: testimonialReducer,
+  blogmanagement: blogmanagementReducer,
+  pcrepair: pcrepairReducer,
+  laptoprepair: laptoprepairReducer,
+  mobilerepair: mobilerepairReducer,
 });
 
 export { rootPersistConfig, rootReducer };

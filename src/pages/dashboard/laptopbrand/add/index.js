@@ -4,29 +4,29 @@ import { PATH_DASHBOARD } from '../../../../routes/paths';
 import DashboardLayout from '../../../../layouts/dashboard';
 import { useSettingsContext } from '../../../../components/settings';
 import CustomBreadcrumbs from '../../../../components/custom-breadcrumbs';
-import { BrandAddForm } from '../../../../sections/@dashboard/brand';
+import { LaptopBrandAddForm } from '../../../../sections/@dashboard/laptopbrand';
 
-BrandAdd.getLayout = (page) => <DashboardLayout>{page}</DashboardLayout>;
+LaptopBrandAdd.getLayout = (page) => <DashboardLayout>{page}</DashboardLayout>;
 
-export default function BrandAdd() {
+export default function LaptopBrandAdd() {
     const { themeStretch } = useSettingsContext();
 
     return (
         <>
             <Head>
-                <title>Brand : Add Brand</title>
+                <title>Laptop Brand : Add Laptop Brand</title>
             </Head>
             <Container maxWidth={themeStretch ? false : 'lg'}>
                 <CustomBreadcrumbs
-                      heading="Create A New Brand"
+                      heading="Create A Laptop Brand"
                     links={[
                         { name: 'Dashboard', href: PATH_DASHBOARD.root },
-                        { name: 'Brand Management', href: PATH_DASHBOARD.brand.view },
-                        { name: 'Add Brand' },
+                        { name: 'Laptop Brand', href: PATH_DASHBOARD.laptopbrand.view },
+                        { name: 'Add Laptop Brand' },
                     ]}
                 />
 
-                <BrandAddForm />
+                <LaptopBrandAddForm />
             </Container>
         </>
     );
