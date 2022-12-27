@@ -11,6 +11,13 @@ import FormProvider, { RHFSelect, RHFSwitch, RHFTextField, RHFUploadAvatar, RHFU
 import { poststaff } from '../../../../src/redux/slices/staff';
 import { useDispatch, useSelector } from '../../../redux/store';
 import { toast } from 'react-toastify';
+import FormControl from '@mui/material/FormControl';
+import InputLabel from '@mui/material/InputLabel';
+import MenuItem from '@mui/material/MenuItem';
+import OutlinedInput from '@mui/material/OutlinedInput';
+import Select from '@mui/material/Select';
+import { getCity } from '../../../../src/redux/slices/city';
+import { styled, useTheme } from '@mui/material/styles';
 
 export const city = [{ label: 'ALL' }, { label: 'RAIPUR' },
 { label: 'DURG' }, { label: 'BHILAI  ' }, { label: 'BILASPUR' }, { label: 'KANKER' }];
@@ -18,21 +25,54 @@ export const city = [{ label: 'ALL' }, { label: 'RAIPUR' },
 export const designations = [{ label: 'ADMIN' }, { label: 'ADMIN ASSOCIATE' },
 { label: 'PICKAPP AGENT' }, { label: 'SERVICE MANAGER' }];
 
+
+const ITEM_HEIGHT = 48;
+const ITEM_PADDING_TOP = 8;
+const MenuProps = {
+    PaperProps: {
+        style: {
+            maxHeight: ITEM_HEIGHT * 4.5 + ITEM_PADDING_TOP,
+            width: 250,
+        },
+    },
+};
+
+function getStyles(name, personName, theme) {
+    return {
+        fontWeight:
+            personName?.indexOf(name) === -1 ? theme.typography.fontWeightRegular : theme.typography.fontWeightMedium,
+    };
+}
+
 export default function StaffAddForm() {
     const { push } = useRouter();
     const dispatch = useDispatch();
+    const theme = useTheme();
 
     const [showPassword, setShowPassword] = useState(false);
     const [isLoading, setIsLoading] = useState(false);
-
+    const [cityType, setcityType] = useState([]);
     // const { Addstaffs } = useSelector((state) => state.staff);
+
+  const handleChange = (event) => {
+        const {
+            target: { value },
+        } = event;
+        setcityType(typeof value === 'string' ? value.split(',') : value);
+    };
+
+    const { allCity } = useSelector((state) => state?.city);
+
+    useEffect(() => {
+        dispatch(getCity());
+    }, [dispatch]);
 
     const phoneRegExp =
         /^((\\+[1-9]{1,4}[ \\-]*)|(\\([0-9]{2,3}\\)[ \\-]*)|([0-9]{2,4})[ \\-]*)*?[0-9]{3,4}?[ \\-]*[0-9]{3,4}?$/;
 
     const NewSchema = Yup.object().shape({
         name: Yup.string().required('Name is required'),
-        profile: Yup.mixed().test('required', 'Profile Pictures is required', (value) => value !== ''),
+        // profile: Yup.mixed().test('required', 'Profile Pictures is required', (value) => value !== ''),
         contact_no: Yup.string()
             .min(10, 'Password must be at least 10 characters')
             .max(10, 'Password must be at least 10 characters')
@@ -47,7 +87,7 @@ export default function StaffAddForm() {
         profile: '',
         name: '',
         contact_no: '',
-        city: '',
+        city: [],
         designation: '',
         password: '',
     };
@@ -74,11 +114,11 @@ export default function StaffAddForm() {
         try {
             await new Promise((resolve) => setTimeout(resolve, 500));
             let formData = new FormData();
-            formData.append('profile', data.profile);
+            // formData.append('profile', data.profile);
             formData.set('password', data.password);
             formData.set('name', data.name);
             formData.set('contact_no', data.contact_no);
-            formData.set('city', data.city);
+            formData.set('city', cityType);
             formData.set('designation', data.designation);
             dispatch(poststaff(formData, toast, push, reset, setIsLoading));
         } catch (error) {
@@ -148,16 +188,29 @@ export default function StaffAddForm() {
                                         </Grid>
 
                                         <Grid item xs={12} md={6}>
-                                            <RHFSelect name="city" label="Assigned City">
-                                                <option value={null}>Select Assigned City</option>
-                                                {city.map((option, index) => (
-                                                    <option key={index}
-                                                        value={option?.label}
-                                                    >
-                                                        {option.label}
-                                                    </option>
-                                                ))}
-                                            </RHFSelect>
+
+                                            <FormControl sx={{width: '100%' }}>
+                                                <InputLabel id="demo-multiple-name-label">Assigned City</InputLabel>
+                                                <Select
+                                                    labelId="demo-multiple-name-label"
+                                                    id="demo-multiple-name"
+                                                    multiple
+                                                    value={cityType}
+                                                    onChange={handleChange}
+                                                    input={<OutlinedInput label="Assigned City" />}
+                                                    MenuProps={MenuProps}
+                                                >
+                                                    {allCity?.map((items, index) => (
+                                                        <MenuItem
+                                                            key={index}
+                                                            value={items?._id}
+                                                            style={getStyles(items?._id, cityType, theme)}
+                                                        >
+                                                            {items?.city_name}
+                                                        </MenuItem>
+                                                    ))}
+                                                </Select>
+                                            </FormControl>
                                         </Grid>
 
 

@@ -14,6 +14,8 @@ import FormProvider, {
   RHFTextField,
 } from '../../../components/hook-form';
 import { putCoupons, postCoupons } from "../../../redux/slices/coupons";
+import { Controller } from 'react-hook-form';
+import { DatePicker } from '@mui/x-date-pickers/DatePicker';
 
 const LabelStyle = styled(Typography)(({ theme }) => ({
   ...theme.typography.subtitle2,
@@ -32,6 +34,7 @@ export default function CouponsAddForm({ isEdit = false, oneCoupon, id }) {
   const dispatch = useDispatch();
 
   const [isLoading, setisLoading] = useState(false);
+  const [filterStartDate, setFilterStartDate] = useState(new Date());
 
   const NewProductSchema = Yup.object().shape({
     coupon_name: Yup.string().required('Coupon Name is required'),
@@ -56,6 +59,7 @@ export default function CouponsAddForm({ isEdit = false, oneCoupon, id }) {
     reset,
     watch,
     setValue,
+    control,
     getValues,
     handleSubmit,
     formState: { isSubmitting },
@@ -66,6 +70,7 @@ export default function CouponsAddForm({ isEdit = false, oneCoupon, id }) {
   useEffect(() => {
     if (isEdit && oneCoupon) {
       reset(defaultValues);
+      setFilterStartDate(oneCoupon?.coupon_validtill);
     } else {
       reset(defaultValues);
     }
@@ -73,6 +78,7 @@ export default function CouponsAddForm({ isEdit = false, oneCoupon, id }) {
 
   const onSubmit = async (data) => {
     setisLoading(true);
+    console.log("data",data)
     try {
       await new Promise((resolve) => setTimeout(resolve, 500));
       const payload = {
@@ -100,9 +106,25 @@ export default function CouponsAddForm({ isEdit = false, oneCoupon, id }) {
 
               <RHFTextField name="coupon_code" label="Coupon Code" />
 
-              <RHFTextField name="coupon_discount" label="Coupon Discount" />
+              {/* <RHFTextField name="coupon_discount" label="Coupon Discount" /> */}
 
-              <RHFTextField name="coupon_validtill" label="Coupon Validtill" />
+              <Controller
+                name="coupon_validtill"
+                control={control}
+                render={({ field, fieldState: { error } }) => (
+                  <DatePicker
+                    label="Coupon Validtill"
+                    value={field.value}
+                    onChange={(newValue) => {
+                      field.onChange(newValue);
+                    }}
+                    renderInput={(params) => (
+                      <TextField {...params} fullWidth error={!!error} helperText={error?.message} />
+                    )}
+                  />
+                )}
+              />
+
             </Stack>
           </Card>
 

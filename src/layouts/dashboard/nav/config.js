@@ -43,6 +43,7 @@ const ICONS = {
   laptoprepairIocn: icon('ic_laptoprepairIocn'),
   pcrepairIocn: icon('ic_pcrepairIocn'),
   mobilerepairIocn: icon('ic_mobilerepairIocn'),
+  dashboard: icon('ic_dashboard'),
 };
 
 const navConfig = [
@@ -51,27 +52,28 @@ const navConfig = [
   {
     subheader: 'Managment',
     items: [
+      { title: 'Dashboard', path: PATH_DASHBOARD.general.app, icon: ICONS.dashboard },
       { title: "Staff", path: PATH_DASHBOARD.staff.view, icon: ICONS.staffIocn },
-      { title: 'Banner', path: PATH_DASHBOARD.banner.view, icon: ICONS.bannerIocn },
-      { title: 'Notification', path: PATH_DASHBOARD.notification.view, icon: ICONS.postsIocn },
+      { title: 'Customer Management ', path: PATH_DASHBOARD.customer.view, icon: ICONS.customerIocn },
+      { title: 'Coupons', path: PATH_DASHBOARD.coupons.view, icon: ICONS.coponIocn },
     ],
   },
 
   {
-    subheader: 'Enquiry',
+    subheader: 'Service Managment',
     items: [
-      { title: "Contact Enquiry", path: PATH_DASHBOARD.contact.view, icon: ICONS.contacticon },
-      { title: 'Dealer Enquiry', path: PATH_DASHBOARD.dealer.view, icon: ICONS.dealerIocn },
-      { title: 'Resale Request', path: PATH_DASHBOARD.resalerequest.view, icon: ICONS.resaleIocn },
+      { title: 'Mobiler Repair', path: PATH_DASHBOARD.mobilerepair.view, icon: ICONS.mobilerepairIocn },
       { title: 'Laptop Repair', path: PATH_DASHBOARD.laptoprepair.view, icon: ICONS.laptoprepairIocn },
       { title: 'PC Repair', path: PATH_DASHBOARD.pcrepair.view, icon: ICONS.pcrepairIocn },
-      { title: 'Mobiler Repair', path: PATH_DASHBOARD.mobilerepair.view, icon: ICONS.mobilerepairIocn },
+      { title: 'Resale Request', path: PATH_DASHBOARD.resalerequest.view, icon: ICONS.resaleIocn },
     ],
   },
 
   {
     subheader: 'COMMUNICATIONS',
     items: [
+      { title: 'Dealer Enquiry', path: PATH_DASHBOARD.dealer.view, icon: ICONS.dealerIocn },
+      { title: "Contact Enquiry", path: PATH_DASHBOARD.contact.view, icon: ICONS.contacticon },
       { title: "Testimonial", path: PATH_DASHBOARD.testimonials.view, icon: ICONS.dashboard },
       { title: 'Blog And Updates', path: PATH_DASHBOARD.blogmanagement.view, icon: ICONS.blog },
     ],
@@ -83,8 +85,8 @@ const navConfig = [
       { title: "City Management", path: PATH_DASHBOARD.city.view, icon: ICONS.cityIcon },
       { title: "laptop Brand", path: PATH_DASHBOARD.laptopbrand.view, icon: ICONS.laptopIcon },
       { title: 'Mobile Brand', path: PATH_DASHBOARD.mobilebrand.view, icon: ICONS.mobileIcon },
-      { title: 'Customer Management ', path: PATH_DASHBOARD.customer.view, icon: ICONS.customerIocn },
-      { title: 'Coupons', path: PATH_DASHBOARD.coupons.view, icon: ICONS.coponIocn },
+      { title: 'Banner', path: PATH_DASHBOARD.banner.view, icon: ICONS.bannerIocn },
+      { title: 'Notification', path: PATH_DASHBOARD.notification.view, icon: ICONS.postsIocn },
     ],
   },
 

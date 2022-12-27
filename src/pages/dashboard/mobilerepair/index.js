@@ -44,7 +44,7 @@ import {
 import { useSelector, useDispatch } from '../../../redux/store';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
-import { MobileRepairTableRow, MobileRepairForm } from '../../../sections/@dashboard/mobilerepair';
+import { MobileRepairTableRow } from '../../../sections/@dashboard/mobilerepair';
 import { getMobilerepair } from '../../../redux/slices/mobilerepair';
 import {
     onOpenModal,
@@ -53,13 +53,13 @@ import {
 
 const TABLE_HEAD = [
     { id: 'index', label: 'SNO', align: 'left' },
+    { id: 'service_id', label: 'SERVICE ID', align: 'left' },
     { id: 'name', label: 'NAME', align: 'left' },
-    { id: 'contact_no', label: 'CONTACT NO', align: 'left' },  
-    { id: 'email_id', label: 'EMAIL ID', align: 'left' },
-    { id: 'brand_name', label: 'MOBILE BRAND', align: 'left' },
-    { id: 'model_no', label: 'MODEL NO', align: 'left' },
+    { id: 'contact_no', label: 'CONTACT NO', align: 'left' }, 
     { id: 'date_time', label: 'DATA/TIME', align: 'left' },
     { id: 'city', label: 'CITY', align: 'left' },
+    { id: 'locality', label: 'LOCALITY', align: 'left' },
+    { id: 'status', label: 'STATUS', align: 'left' },
     { id: '' },
 ];
 
@@ -136,23 +136,10 @@ export default function Mobilerepair() {
         setFilterName(event.target.value);
     };
 
-    const [onChangeData, setOnChangeData] = useState({});
 
-    const { openModal } = useSelector((state) => state.calendar);
-
-    const handleCloseModal = () => {
-        dispatch(onCloseModal());
-    };
-
-    const handleAddEvent = (value) => {
-        setOnChangeData({
-            locality: value?.locality || "",
-            problem_facing: value?.problem_facing || "",
-            pincode: value?.pincode || "",
-            full_address: value?.full_address || "",
-        })
-        dispatch(onOpenModal());
-    };
+    const handledetailRow = (id) => {
+        push(`/dashboard/mobilerepair/detail/${id}`);
+      };
 
     return (
         <>
@@ -197,7 +184,7 @@ export default function Mobilerepair() {
                                                     key={row.id}
                                                     row={row}
                                                     index={index}
-                                                    onOpenDialog={() => handleAddEvent(row)}
+                                                    onDetailRow={() => handledetailRow(row._id)}
                                                 />
                                             ) : (
                                                 !isNotFound && <TableSkeleton key={index} sx={{ height: denseHeight }} />
@@ -223,16 +210,7 @@ export default function Mobilerepair() {
                 </Card>
             </Container>
 
-            <Dialog fullWidth maxWidth="xs" open={openModal} onClose={handleCloseModal}>
-                <DialogTitle>Details</DialogTitle>
-                <MobileRepairForm
-                    onCancel={handleCloseModal}
-                    problem={onChangeData?.problem_facing}
-                    pincode={onChangeData?.pincode}
-                    locality={onChangeData?.locality}
-                    address={onChangeData?.full_address}
-                />
-            </Dialog>
+          
             
         </>
     );

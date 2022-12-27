@@ -73,9 +73,9 @@ export default function PostsTableRow({ row, index, onEditRow, onDeleteRow }) {
           {coupon_code}
       </TableCell>
 
-      <TableCell align="left">
+      {/* <TableCell align="left">
           {coupon_discount}
-      </TableCell>
+      </TableCell> */}
       
       
       <TableCell align="left" width={150}>

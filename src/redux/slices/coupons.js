@@ -61,13 +61,13 @@ const slice = createSlice({
 });
 export default slice.reducer;
 
-// GET city
+// GET coupons
 export function getCoupons() {
     return async () => {
         dispatch(slice.actions.startLoading());
         try {
-            const response = await axios.get('//all', { headers: header });
-            dispatch(slice.actions.getCouponsSuccess(response.data));
+            const response = await axios.get('/coupon/all', { headers: header });
+            dispatch(slice.actions.getCouponsSuccess(response.data.coupons));
         } catch (error) {
             dispatch(slice.actions.hasError(error));
         }
@@ -78,8 +78,8 @@ export function getOneCoupon(id) {
     return async () => {
         dispatch(slice.actions.startLoading());
         try {
-            const response = await axios.get('//one/' + id, { headers: header });
-            dispatch(slice.actions.getOneCouponSuccess(response.data));
+            const response = await axios.get('/coupon/one/' + id, { headers: header });
+            dispatch(slice.actions.getOneCouponSuccess(response.data.coupon));
         } catch (error) {
             dispatch(slice.actions.hasError(error));
         }
@@ -89,12 +89,12 @@ export function getOneCoupon(id) {
 export function postCoupons(payload, toast, push, reset, setisLoading) {
     return async () => {
         try {
-            const response = await axios.post('//add', payload, { headers: jsonheader });
+            const response = await axios.post('/coupon/add', payload, { headers: jsonheader });
             console.log('response==', response);
             if (response.data?.status == true) {
                 setisLoading(false);
                 toast.success(response.data?.message);
-                push('/dashboard/city');
+                push('/dashboard/coupons');
             } else {
                 setisLoading(false);
                 toast.error(response.data?.message);
@@ -109,11 +109,11 @@ export function postCoupons(payload, toast, push, reset, setisLoading) {
 export function putCoupons(id, payload, toast, push, reset, setisLoading) {
     return async () => {
         try {
-            const response = await axios.put('//update/' + id, payload);
+            const response = await axios.put('/coupon/update/' + id, payload);
             if (response.data?.status == true) {
                 setisLoading(false);
                 toast.success(response.data?.message);
-                push('/dashboard/city');
+                push('/dashboard/coupons');
             } else {
                 setisLoading(false);
                 toast.error(response.data?.message);
@@ -126,12 +126,12 @@ export function putCoupons(id, payload, toast, push, reset, setisLoading) {
 }
 
 
-// delete city
+// delete coupons
 export function deleteCoupons(id, toast) {
     return async () => {
         dispatch(slice.actions.startLoading());
         try {
-            const response = await axios.delete('//delete/' + id, { headers: header });
+            const response = await axios.delete('/coupon/delete/' + id, { headers: header });
             dispatch(slice.actions.deleteCouponsSuccess(response.data.status));
             toast.success(response.data?.message);
         } catch (error) {

@@ -1,2 +1,2 @@
-export { default as MobileRepairForm } from './MobileRepairForm';
+export { default as MobileDetail } from './MobileDetail';
 export { default as MobileRepairTableRow } from './MobileRepairTableRow';

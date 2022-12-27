@@ -168,7 +168,7 @@ export default function GeneralAnalyticsPage() {
           </Grid>
 
           <Grid item xs={12} md={6} lg={4}>
-            <AnalyticsOrderTimeline title="Order Timeline" list={_analyticOrderTimeline} />
+            <AnalyticsOrderTimeline title="Order Timeline" list={_analyticOrderTimeline} /> 
           </Grid>
 
           <Grid item xs={12} md={6} lg={4}>

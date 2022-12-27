@@ -51,7 +51,7 @@ const TABLE_HEAD = [
     { id: 'index', label: 'SNO', align: 'left' },
     { id: 'coupon_name', label: 'COUPON NAME', align: 'left' },
     { id: 'coupon_code', label: 'COUPON CODE', align: 'left' },
-    { id: 'coupon_discount', label: 'DISCOUTN IN %', align: 'left' },
+    // { id: 'coupon_discount', label: 'DISCOUTN IN %', align: 'left' },
     { id: 'created_at', label: 'DATE', align: 'left' },
     { id: '' },
 ];
