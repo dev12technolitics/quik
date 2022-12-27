@@ -3,7 +3,7 @@ import axios from '../../utils/axios';
 import { dispatch } from '../store';
 
 const initialState = {
-  isLoading: false,
+  isLoading: false, 
   error: null,
   banners: [],
   addbanner: {},

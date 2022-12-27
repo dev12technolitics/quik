@@ -1,34 +1,27 @@
-import * as Yup from 'yup';
-import { useCallback, useState, useEffect } from 'react';
 import { useSnackbar } from 'notistack';
+import { useEffect, useState } from 'react';
+import * as Yup from 'yup';
 // next
 import { useRouter } from 'next/router';
 // form
 import { yupResolver } from '@hookform/resolvers/yup';
-import { useForm, Controller } from 'react-hook-form';
+import { useForm } from 'react-hook-form';
 // @mui
 import { LoadingButton } from '@mui/lab';
+import { Card, Grid, Stack, Typography } from '@mui/material';
 import { styled } from '@mui/material/styles';
-import { Grid, Card, Chip, Stack, Button, TextField, Typography, Autocomplete } from '@mui/material';
-import { useDispatch, useSelector } from '../../../redux/store';
-import { postdesignation, putdesignation } from '../../../redux/slices/designation';
 import { getDepartmentsAll } from '../../../redux/slices/department';
+import { postdesignation, putdesignation } from '../../../redux/slices/designation';
+import { useDispatch, useSelector } from '../../../redux/store';
 // routes
-import { PATH_DASHBOARD } from '../../../routes/paths';
 //components
-import
-
-FormProvider,
-{
-  RHFSwitch,
-  RHFEditor,
+import FormProvider, {
   RHFSelect,
-  RHFTextField,
-  RHFUpload,
+  RHFTextField
 } from '../../../components/hook-form';
 //
 // import BannerNewPostPreview from './BannerNewPostPreview';
-import { ToastContainer, toast } from 'react-toastify';
+import { toast, ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 // ----------------------------------------------------------------------
 

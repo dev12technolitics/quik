@@ -1,17 +1,15 @@
-import PropTypes from 'prop-types';
-import { useState, useEffect } from 'react';
-import { sentenceCase } from 'change-case';
-import { useTheme } from '@mui/material/styles';
-import { TableRow, Checkbox, Button, TableCell, Typography, MenuItem, IconButton } from '@mui/material';
-import Image from '../../../components/image';
-import Iconify from '../../../components/iconify';
-import ConfirmDialog from '../../../../src/components/confirm-dialog/ConfirmDialog';
-import MenuPopover from '../../../components/menu-popover';
-import moment from 'moment';
-import axios from '../../../utils/axios';
+import { Button, IconButton, MenuItem, TableCell, TableRow } from '@mui/material';
 import Select from '@mui/material/Select';
-import { ToastContainer, toast } from 'react-toastify';
+import { useTheme } from '@mui/material/styles';
+import PropTypes from 'prop-types';
+import { useEffect, useState } from 'react';
+import { toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
+import ConfirmDialog from '../../../../src/components/confirm-dialog/ConfirmDialog';
+import Iconify from '../../../components/iconify';
+import Image from '../../../components/image';
+import MenuPopover from '../../../components/menu-popover';
+import axios from '../../../utils/axios';
 
 BrandTableRow.propTypes = {
   row: PropTypes.object,

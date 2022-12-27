@@ -1,12 +1,11 @@
-import { useState, useEffect } from 'react';
 import { useRouter } from 'next/router';
-import { _userAbout, _userFeeds, _userFriends, _userGallery, _userFollowers } from '../../../../_mock/arrays';
-import DashboardLayout from '../../../../layouts/dashboard';
+import { useEffect } from 'react';
 import { useSettingsContext } from '../../../../components/settings';
-
-import StaffEditForm from './StaffEditForm';
-import { useDispatch, useSelector } from '../../../../redux/store';
+import DashboardLayout from '../../../../layouts/dashboard';
+ 
 import { getOnestaff } from '../../../../../src/redux/slices/staff';
+import { useDispatch, useSelector } from '../../../../redux/store';
+import StaffEditForm from './StaffEditForm';
 
 StaffEdit.getLayout = (page) => <DashboardLayout>{page}</DashboardLayout>;
 

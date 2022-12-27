@@ -1,14 +1,12 @@
 import PropTypes from 'prop-types';
 import { useState } from 'react';
-import { sentenceCase } from 'change-case';
 // @mui
+import { Button, IconButton, MenuItem, TableCell, TableRow } from '@mui/material';
 import { useTheme } from '@mui/material/styles';
-import { TableRow, Checkbox, TableCell, Typography, MenuItem, IconButton, Button } from '@mui/material';
-import Image from '../../../components/image';
-import Iconify from '../../../components/iconify';
 import ConfirmDialog from '../../../../src/components/confirm-dialog/ConfirmDialog';
+import Iconify from '../../../components/iconify';
+import Image from '../../../components/image';
 import MenuPopover from '../../../components/menu-popover';
-import moment from 'moment';
 // ----------------------------------------------------------------------
 
 TestimonialsTableRow.propTypes = {

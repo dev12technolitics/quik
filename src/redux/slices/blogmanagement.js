@@ -4,7 +4,7 @@ import { dispatch } from '../store';
 
 const initialState = {
   isLoading: false,
-  error: null,
+  error: null, 
   blogmanagements: [],
   addBlogmanagement: {},
   oneBlogmanagement: {},

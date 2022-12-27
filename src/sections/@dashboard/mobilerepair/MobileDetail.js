@@ -1,18 +1,16 @@
-import PropTypes from 'prop-types';
-import * as Yup from 'yup';
-import { useEffect, useState } from 'react';
-import { useRouter } from 'next/router';
-import { useForm } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
 import { Box, Card, Grid, Stack } from '@mui/material';
+import { useRouter } from 'next/router';
+import PropTypes from 'prop-types';
+import { useEffect, useState } from 'react';
+import { useForm } from 'react-hook-form';
+import * as Yup from 'yup';
+import FormProvider, { RHFTextField } from '../../../components/hook-form';
 import Image from '../../../components/image';
-import FormProvider, { RHFSelect, RHFTextField, RHFUploadAvatar } from '../../../components/hook-form';
 import { getBrand } from '../../../redux/slices/brand';
 import { useDispatch, useSelector } from '../../../redux/store';
+import { _analyticOrderTimeline } from '../../../_mock/arrays';
 import MobileDetailTimeline from './MobileDetailTimeline';
-import MobileTimeline from './MobileTimeline';
-import { _analyticPost, _analyticOrderTimeline, _analyticTraffic } from '../../../_mock/arrays';
-import { width } from '@mui/system';
 
 MobileDetail.propTypes = {
     isEdit: PropTypes.bool,

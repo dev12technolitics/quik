@@ -1,23 +1,19 @@
 import PropTypes from 'prop-types';
 import { useState } from 'react';
-import { sentenceCase } from 'change-case';
 // @mui
+import { Button, IconButton, MenuItem, TableCell, TableRow, Typography } from '@mui/material';
 import { useTheme } from '@mui/material/styles';
-import { TableRow, Checkbox, Button, TableCell, Typography, MenuItem, IconButton } from '@mui/material';
-// utils
-import { fDate } from '../../../utils/formatTime';
-import { fCurrency } from '../../../utils/formatNumber';
-import Label from '../../../components/label';
-// import Label from '../../../label/Label';
+// utils 
+// import Label from '../../../label/Label'; 
 
-import Image from '../../../components/image';
 import Iconify from '../../../components/iconify';
+import Image from '../../../components/image';
 // import { TableMoreMenu } from '../../../components/table';
 
 import ConfirmDialog from '../../../../src/components/confirm-dialog/ConfirmDialog';
 
-import MenuPopover from '../../../components/menu-popover';
 import moment from 'moment';
+import MenuPopover from '../../../components/menu-popover';
 // ----------------------------------------------------------------------
 
 BannerTableRow.propTypes = {

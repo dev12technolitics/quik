@@ -1,7 +1,5 @@
-import { PATH_DASHBOARD } from '../../../routes/paths';
-import Label from '../../../components/label';
-import Iconify from '../../../components/iconify';
 import SvgColor from '../../../components/svg-color';
+import { PATH_DASHBOARD } from '../../../routes/paths';
 
 
 const icon = (name) => <SvgColor src={`/assets/icons/navbar/${name}.svg`} sx={{ width: 1, height: 1 }} />;
@@ -27,7 +25,6 @@ const ICONS = {
   menuItem: icon('ic_menu_item'),
   ecommerce: icon('ic_ecommerce'),
   analytics: icon('ic_analytics'),
-  dashboard: icon('ic_dashboard'),
   staffIocn: icon('ic_staff'),
   bannerIocn: icon('ic_banner'),
   postsIocn: icon('ic_posts'),

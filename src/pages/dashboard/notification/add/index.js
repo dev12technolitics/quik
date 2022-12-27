@@ -1,10 +1,7 @@
-import { paramCase } from 'change-case';
-// next
+  // next
 import Head from 'next/head';
 
-import { useEffect } from 'react';
 
-import { useRouter } from 'next/router';
 // @mui
 import { Container } from '@mui/material';
 // routes
@@ -14,11 +11,11 @@ import { PATH_DASHBOARD } from '../../../../routes/paths';
 // layouts
 import DashboardLayout from '../../../../layouts/dashboard';
 // components
-import { useSettingsContext } from '../../../../components/settings';
 import CustomBreadcrumbs from '../../../../components/custom-breadcrumbs';
+import { useSettingsContext } from '../../../../components/settings';
 // sections
+import { useDispatch } from "../../../../redux/store";
 import { PostsAddForm } from '../../../../sections/@dashboard/posts';
-import {useDispatch, useSelector} from "../../../../redux/store";
 // import { getOnebanner } from '../../../../redux/slices/banner';
 
 // ----------------------------------------------------------------------

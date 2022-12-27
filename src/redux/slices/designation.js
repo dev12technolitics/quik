@@ -1,9 +1,9 @@
 import { createSlice } from '@reduxjs/toolkit';
 import axios from '../../utils/axios';
 import { dispatch } from '../store';
-
+ 
 const initialState = {
-  isLoading: false,
+  isLoading: false, 
   error: null,
   designations: [],
   adddesignation: {},

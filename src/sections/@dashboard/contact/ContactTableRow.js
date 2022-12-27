@@ -1,19 +1,10 @@
 import PropTypes from 'prop-types';
-import { useState, useEffect } from 'react';
-import { sentenceCase } from 'change-case';
 // @mui
+import { TableCell, TableRow } from '@mui/material';
 import { useTheme } from '@mui/material/styles';
-import { TableRow, Checkbox, Button, TableCell, Typography, MenuItem, IconButton } from '@mui/material';
+ 
 
-import Select from '@mui/material/Select';
-import Image from '../../../components/image';
-import Iconify from '../../../components/iconify';
-
-import ConfirmDialog from '../../../../src/components/confirm-dialog/ConfirmDialog';
-import axios from '../../../utils/axios';
-import MenuPopover from '../../../components/menu-popover';
-import moment from 'moment';
-// ----------------------------------------------------------------------
+// ----------------------------------------- -----------------------------
 
 ContactTableRow.propTypes = {
   row: PropTypes.object,

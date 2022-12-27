@@ -1,19 +1,19 @@
 import PropTypes from 'prop-types';
+import { useCallback, useEffect, useState } from 'react';
 import * as Yup from 'yup';
-import { useCallback, useEffect, useMemo, useState } from 'react';
 
-// next
+// next 
 import { useRouter } from 'next/router';
 // form
-import { useForm, Controller } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
+import { useForm } from 'react-hook-form';
 // @mui
 import { LoadingButton } from '@mui/lab';
-import { Box, Card, Grid, Stack, Typography, FormControlLabel } from '@mui/material';
+import { Box, Card, Grid, Stack, Typography } from '@mui/material';
 
 import FormProvider, { RHFSelect, RHFTextField, RHFUploadAvatar } from '../../../../components/hook-form';
 
-import { useDispatch, useSelector } from '../../../../redux/store';
+import { useDispatch } from '../../../../redux/store';
 
 import { toast } from 'react-toastify';
 import { putstaff } from '../../../../../src/redux/slices/staff';

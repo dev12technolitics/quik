@@ -1,24 +1,19 @@
-import PropTypes from 'prop-types';
-import moment from 'moment';
-import { useTheme } from '@mui/material/styles';
-import { TableRow, TableCell, MenuItem, DialogTitle, Dialog, } from '@mui/material';
-import { toast } from 'react-toastify';
-import axios from '../../../utils/axios';
+import { Dialog, DialogTitle, MenuItem, TableCell, TableRow } from '@mui/material';
 import Select from '@mui/material/Select';
-import { useState, useEffect } from 'react';
+import { useTheme } from '@mui/material/styles';
+import moment from 'moment';
+import PropTypes from 'prop-types';
+import { useEffect, useState } from 'react';
+import { toast } from 'react-toastify';
 import {
-  PickupForm,
-  RepairingForm,
-  StuckedForm,
-  OnReviewForm,
-  ReadyReviewForm,
-  CanceledForm,
-} from './statusmodeltab';
-import { useSelector, useDispatch } from '../../../redux/store';
-import {
-  onOpenModal,
-  onCloseModal,
+  onCloseModal, onOpenModal
 } from '../../../redux/slices/calendar';
+import { useDispatch, useSelector } from '../../../redux/store';
+import axios from '../../../utils/axios';
+import {
+  CanceledForm, OnReviewForm, PickupForm, ReadyReviewForm, RepairingForm,
+  StuckedForm
+} from './statusmodeltab';
 
 MobileRepairTableRow.propTypes = {
   row: PropTypes.object,

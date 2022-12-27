@@ -1,28 +1,26 @@
-import { useState, useEffect } from 'react';
 import { useRouter } from 'next/router';
+import { useEffect, useState } from 'react';
 // next
 import Head from 'next/head';
 // @mui
-import { Tab, Card, Tabs, Container, Box } from '@mui/material';
+import { Box, Container, Tab, Tabs } from '@mui/material';
 // routes
 import { PATH_DASHBOARD } from '../../../../routes/paths';
 // auth
-import { useAuthContext } from '../../../../auth/useAuthContext';
 // _mock_
-import { _userAbout, _userFeeds, _userFriends, _userGallery, _userFollowers } from '../../../../_mock/arrays';
 // layouts
 import DashboardLayout from '../../../../layouts/dashboard';
 // components
-import Iconify from '../../../../components/iconify';
 import CustomBreadcrumbs from '../../../../components/custom-breadcrumbs';
+import Iconify from '../../../../components/iconify';
 import { useSettingsContext } from '../../../../components/settings';
 
+import { getOnestaff } from '../../../../../src/redux/slices/staff';
+import { useDispatch, useSelector } from '../../../../redux/store';
 import {
     ChangePassword,
     StaffEdit
 } from '../../../../sections/@dashboard/staff/tabs';
-import { useDispatch, useSelector } from '../../../../redux/store';
-import { getOnestaff } from '../../../../../src/redux/slices/staff';
 
 EditStaff.getLayout = (page) => <DashboardLayout>{page}</DashboardLayout>;
 

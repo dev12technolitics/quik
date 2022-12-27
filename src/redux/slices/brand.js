@@ -2,7 +2,7 @@ import { createSlice } from '@reduxjs/toolkit';
 import axios from '../../utils/axios';
 import { dispatch } from '../store';
 
-const initialState = {
+const initialState = { 
     isLoading: false,
     error: null,
     allBrand: [],

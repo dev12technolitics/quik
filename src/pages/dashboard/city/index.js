@@ -1,5 +1,4 @@
-import { paramCase } from 'change-case';
-import { useState, useEffect } from 'react';
+import { useEffect, useState } from 'react';
 // next
 import Head from 'next/head';
 import NextLink from 'next/link';
@@ -7,45 +6,28 @@ import { useRouter } from 'next/router';
 
 // @mui
 import {
-    Tab,
-    Tabs,
-    Card,
-    Table,
-    Button,
-    Tooltip,
-    Divider,
-    TableBody,
-    Container,
-    IconButton,
-    TableContainer,
+    Button, Card, Container, Table, TableBody, TableContainer
 } from '@mui/material';
 // routes
 import { PATH_DASHBOARD } from '../../../routes/paths';
 // _mock_
-import { _userList } from '../../../_mock/arrays';
 // layouts
 import DashboardLayout from '../../../layouts/dashboard';
 // components
+import { toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
+import { deleteCity, getCity } from '../../../../src/redux/slices/city';
+import CustomBreadcrumbs from '../../../components/custom-breadcrumbs';
 import Iconify from '../../../components/iconify';
 import Scrollbar from '../../../components/scrollbar';
-import ConfirmDialog from '../../../components/confirm-dialog';
-import CustomBreadcrumbs from '../../../components/custom-breadcrumbs';
 import { useSettingsContext } from '../../../components/settings';
 import {
-    useTable,
-    getComparator,
-    emptyRows,
-    TableNoData,
-    TableEmptyRows,
-    TableHeadCustom,
-    TablePaginationCustom,
-    TableSkeleton
+    emptyRows, getComparator, TableEmptyRows,
+    TableHeadCustom, TableNoData, TablePaginationCustom,
+    TableSkeleton, useTable
 } from '../../../components/table';
+import { useDispatch, useSelector } from '../../../redux/store';
 import { CityTableRow } from '../../../sections/@dashboard/city';
-import { getCity, deleteCity } from '../../../../src/redux/slices/city';
-import { useSelector, useDispatch } from '../../../redux/store';
-import { ToastContainer, toast } from 'react-toastify';
-import 'react-toastify/dist/ReactToastify.css';
 
 const TABLE_HEAD = [
     { id: 'index', label: 'Sno', align: 'left' },

@@ -1,9 +1,9 @@
+import { Box, Button, DialogActions } from '@mui/material';
 import PropTypes from 'prop-types';
 import Testimonialsmodel from './Testimonialsmodel';
-import { Box, Button, DialogActions } from '@mui/material';
 
 TestimonialsForm.propTypes = {
-    onCancel: PropTypes.func
+    onCancel: PropTypes.func 
 };
 
 export default function TestimonialsForm({ onCancel, comment }) {

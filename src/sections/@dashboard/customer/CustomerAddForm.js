@@ -1,20 +1,19 @@
-import PropTypes from 'prop-types';
-import * as Yup from 'yup';
-import { useCallback, useEffect, useMemo, useState } from 'react';
-import { useRouter } from 'next/router';
-import { useForm } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
-import { styled } from '@mui/material/styles';
-import { ToastContainer, toast } from 'react-toastify';
-import 'react-toastify/dist/ReactToastify.css';
 import { LoadingButton } from '@mui/lab';
-import { Card, Chip, Grid, Stack, TextField, Typography, InputAdornment, Box } from '@mui/material';
-import { useSelector, useDispatch } from "../../../redux/store"
+import { Card, Grid, Stack, Typography } from '@mui/material';
+import { styled } from '@mui/material/styles';
+import { useRouter } from 'next/router';
+import PropTypes from 'prop-types';
+import { useEffect, useMemo, useState } from 'react';
+import { useForm } from 'react-hook-form';
+import { toast, ToastContainer } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
+import * as Yup from 'yup';
 import FormProvider, {
-    RHFUpload,
-    RHFTextField,
+    RHFTextField
 } from '../../../components/hook-form';
 import { postCustomer, putCustomer } from "../../../redux/slices/customer";
+import { useDispatch } from "../../../redux/store";
 
 const LabelStyle = styled(Typography)(({ theme }) => ({
     ...theme.typography.subtitle2,

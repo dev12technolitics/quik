@@ -1,9 +1,8 @@
 import PropTypes from 'prop-types';
-import merge from 'lodash/merge';
 
-import { CardHeader, Box } from '@mui/material';
+import { Box, CardHeader } from '@mui/material';
 
-MobileDetailTimeline.propTypes = {
+MobileDetailTimeline.propTypes = { 
   title: PropTypes.string,
   
 };

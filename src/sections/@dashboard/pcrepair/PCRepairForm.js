@@ -1,7 +1,7 @@
+import { Box, Button, DialogActions } from '@mui/material';
 import PropTypes from 'prop-types';
 import PCRepairmodel from './PCRepairmodel';
-import { Box, Button, DialogActions } from '@mui/material';
-
+ 
 PCRepairForm.propTypes = {
     onCancel: PropTypes.func
 };

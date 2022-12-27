@@ -1,7 +1,6 @@
-import { paramCase } from 'change-case';
 // next
 import Head from 'next/head';
-
+ 
 import { useEffect } from 'react';
 
 import { useRouter } from 'next/router';
@@ -14,12 +13,12 @@ import { PATH_DASHBOARD } from '../../../../routes/paths';
 // layouts
 import DashboardLayout from '../../../../layouts/dashboard';
 // components
-import { useSettingsContext } from '../../../../components/settings';
 import CustomBreadcrumbs from '../../../../components/custom-breadcrumbs';
+import { useSettingsContext } from '../../../../components/settings';
 // sections
-import { DepartmentAddForm } from '../../../../sections/@dashboard/department';
-import {useDispatch, useSelector} from "../../../../redux/store";
 import { getOneDepartments } from '../../../../redux/slices/department';
+import { useDispatch, useSelector } from "../../../../redux/store";
+import { DepartmentAddForm } from '../../../../sections/@dashboard/department';
 
 // ----------------------------------------------------------------------
 

@@ -1,35 +1,28 @@
 import { paramCase } from 'change-case';
-import { useState, useEffect } from 'react';
+import { useEffect, useState } from 'react';
 // next
 import Head from 'next/head';
 import NextLink from 'next/link';
 import { useRouter } from 'next/router';
 // @mui
-import { Card, Table, Button, Tooltip, TableBody, Container, IconButton, TableContainer } from '@mui/material';
+import { Button, Card, Container, IconButton, Table, TableBody, TableContainer, Tooltip } from '@mui/material';
 // redux
-import { useDispatch, useSelector } from '../../../redux/store';
 import { getDepartmentsAll } from '../../../redux/slices/department';
+import { useDispatch, useSelector } from '../../../redux/store';
 // routes
 import { PATH_DASHBOARD } from '../../../routes/paths';
 // layouts
 import DashboardLayout from '../../../layouts/dashboard';
 // components
-import { useSettingsContext } from '../../../components/settings';
-import {
-  useTable,
-  getComparator,
-  emptyRows,
-  TableNoData,
-  TableSkeleton,
-  TableEmptyRows,
-  TableHeadCustom,
-  TableSelectedAction,
-  TablePaginationCustom,
-} from '../../../components/table';
+import ConfirmDialog from '../../../components/confirm-dialog';
+import CustomBreadcrumbs from '../../../components/custom-breadcrumbs';
 import Iconify from '../../../components/iconify';
 import Scrollbar from '../../../components/scrollbar';
-import CustomBreadcrumbs from '../../../components/custom-breadcrumbs';
-import ConfirmDialog from '../../../components/confirm-dialog';
+import { useSettingsContext } from '../../../components/settings';
+import {
+  emptyRows, getComparator, TableEmptyRows,
+  TableHeadCustom, TableNoData, TablePaginationCustom, TableSelectedAction, TableSkeleton, useTable
+} from '../../../components/table';
 // sections
 import { DepartmentTableRow } from '../../../sections/@dashboard/department';
 

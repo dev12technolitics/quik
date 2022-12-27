@@ -1,15 +1,14 @@
-import { paramCase } from 'change-case';
-import Head from 'next/head';
-import { useEffect } from 'react';
-import { useRouter } from 'next/router';
 import { Container } from '@mui/material';
-import { PATH_DASHBOARD } from '../../../../routes/paths';
-import DashboardLayout from '../../../../layouts/dashboard';
-import { useSettingsContext } from '../../../../components/settings';
+import Head from 'next/head';
+import { useRouter } from 'next/router';
+import { useEffect } from 'react';
 import CustomBreadcrumbs from '../../../../components/custom-breadcrumbs';
-import { LaptopBrandAddForm } from '../../../../sections/@dashboard/laptopbrand';
-import { useDispatch, useSelector } from "../../../../redux/store";
+import { useSettingsContext } from '../../../../components/settings';
+import DashboardLayout from '../../../../layouts/dashboard';
 import { getOneLaptop } from '../../../../redux/slices/laptopbrand';
+import { useDispatch, useSelector } from "../../../../redux/store";
+import { PATH_DASHBOARD } from '../../../../routes/paths';
+import { LaptopBrandAddForm } from '../../../../sections/@dashboard/laptopbrand';
 
 LaptopEditPage.getLayout = (page) => <DashboardLayout>{page}</DashboardLayout>;
 

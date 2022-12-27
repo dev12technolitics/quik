@@ -1,5 +1,4 @@
-import { paramCase } from 'change-case';
-import { useState, useEffect } from 'react';
+import { useEffect, useState } from 'react';
 // next
 import Head from 'next/head';
 import NextLink from 'next/link';
@@ -7,47 +6,29 @@ import { useRouter } from 'next/router';
 
 // @mui
 import {
-  Tab,
-  Tabs,
-  Card,
-  Table,
-  Button,
-  Tooltip,
-  Divider,
-  TableBody,
-  Container,
-  IconButton,
-  TableContainer,
+  Button, Card, Container, Divider, Table, TableBody
 } from '@mui/material';
 // routes
 import { PATH_DASHBOARD } from '../../../routes/paths';
 // _mock_
-import { _userList } from '../../../_mock/arrays';
 // layouts
 import DashboardLayout from '../../../layouts/dashboard';
 // components
-import Iconify from '../../../components/iconify';
-import Scrollbar from '../../../components/scrollbar';
 import ConfirmDialog from '../../../components/confirm-dialog';
 import CustomBreadcrumbs from '../../../components/custom-breadcrumbs';
+import Iconify from '../../../components/iconify';
+import Scrollbar from '../../../components/scrollbar';
 import { useSettingsContext } from '../../../components/settings';
 import {
-  useTable,
-  getComparator,
-  emptyRows,
-  TableNoData,
-  TableEmptyRows,
-  TableHeadCustom,
-  TableSelectedAction,
-  TablePaginationCustom,
+  emptyRows, getComparator, TableEmptyRows,
+  TableHeadCustom, TableNoData, TablePaginationCustom, useTable
 } from '../../../components/table';
 // sections
 
-import { StaffTableToolbar, DesignationTableRow } from '../../../sections/@dashboard/designation';
 import { getDesignationAll } from '../../../../src/redux/slices/designation';
-import { useSelector, useDispatch } from '../../../redux/store';
+import { useDispatch, useSelector } from '../../../redux/store';
+import { DesignationTableRow } from '../../../sections/@dashboard/designation';
 
-import {toast} from "react-toastify";
 
 // console.log("getstaff",getstaff);
 // ----------------------------------------------------------------------

@@ -1,19 +1,15 @@
 import PropTypes from 'prop-types';
-import { useState, useEffect } from 'react';
-import { sentenceCase } from 'change-case';
+import { useEffect, useState } from 'react';
 // @mui
-import { useTheme } from '@mui/material/styles';
-import { TableRow, Checkbox, Button, TableCell, Typography, MenuItem, IconButton } from '@mui/material';
-
+import { IconButton, MenuItem, TableCell, TableRow } from '@mui/material';
 import Select from '@mui/material/Select';
-import Image from '../../../components/image';
+import { useTheme } from '@mui/material/styles';
 import Iconify from '../../../components/iconify';
+import Image from '../../../components/image';
 
-import ConfirmDialog from '../../../../src/components/confirm-dialog/ConfirmDialog';
-import axios from '../../../utils/axios';
-import MenuPopover from '../../../components/menu-popover';
-import moment from 'moment';
 import { toast } from 'react-toastify';
+import MenuPopover from '../../../components/menu-popover';
+import axios from '../../../utils/axios';
 
 StaffTableRow.propTypes = {
   row: PropTypes.object,

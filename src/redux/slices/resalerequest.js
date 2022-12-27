@@ -5,7 +5,7 @@ import { dispatch } from '../store';
 const initialState = {
   isLoading: false,
   error: null,
-  allResaleRequest: [],
+  allResaleRequest: [], 
 };
 
 const accessToken = typeof window !== 'undefined' ? localStorage.getItem('accessToken') : '';

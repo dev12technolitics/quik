@@ -1,5 +1,4 @@
-import { paramCase } from 'change-case';
-import { useState, useEffect } from 'react';
+import { useEffect, useState } from 'react';
 // next
 import Head from 'next/head';
 import NextLink from 'next/link';
@@ -7,50 +6,32 @@ import { useRouter } from 'next/router';
 
 // @mui
 import {
-  Tab,
-  Tabs,
-  Card,
-  Table,
-  Button,
-  Tooltip,
-  Divider,
-  TableBody,
-  Container,
-  IconButton,
-  TableContainer,
+  Button, Card, Container, Table, TableBody
 } from '@mui/material';
 // routes
 import { PATH_DASHBOARD } from '../../../routes/paths';
 // _mock_
-import { _userList } from '../../../_mock/arrays';
 // layouts
 import DashboardLayout from '../../../layouts/dashboard';
 // components
-import Iconify from '../../../components/iconify';
-import Scrollbar from '../../../components/scrollbar';
 import ConfirmDialog from '../../../components/confirm-dialog';
 import CustomBreadcrumbs from '../../../components/custom-breadcrumbs';
+import Iconify from '../../../components/iconify';
+import Scrollbar from '../../../components/scrollbar';
 import { useSettingsContext } from '../../../components/settings';
 import {
-  useTable,
-  getComparator,
-  emptyRows,
-  TableNoData,
-  TableEmptyRows,
-  TableHeadCustom,
-  TableSelectedAction,
-  TablePaginationCustom,
+  emptyRows, getComparator, TableEmptyRows,
+  TableHeadCustom, TableNoData, TablePaginationCustom, useTable
 } from '../../../components/table';
 // sections
 
-import { StaffTableToolbar, BannerTableRow } from '../../../sections/@dashboard/banner';
-import { getBanners, deleteBanners } from '../../../../src/redux/slices/banner';
-import { useSelector, useDispatch } from '../../../redux/store';
+import { deleteBanners, getBanners } from '../../../../src/redux/slices/banner';
+import { useDispatch, useSelector } from '../../../redux/store';
+import { BannerTableRow } from '../../../sections/@dashboard/banner';
 
 // import { toast } from "react-toastify";
-import { ToastContainer, toast } from 'react-toastify';
+import { toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
-import { reset } from 'numeral';
 
 
 const TABLE_HEAD = [

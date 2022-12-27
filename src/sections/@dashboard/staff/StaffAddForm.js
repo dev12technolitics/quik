@@ -1,23 +1,22 @@
-import PropTypes from 'prop-types';
-import * as Yup from 'yup';
-import { useCallback, useEffect, useMemo, useState } from 'react';
-import { useRouter } from 'next/router';
-import { useForm, Controller } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
 import { LoadingButton } from '@mui/lab';
-import { Box, Card, Grid, Stack, Switch, Typography, InputAdornment, IconButton } from '@mui/material';
-import Iconify from '../../../../src/components/iconify';
-import FormProvider, { RHFSelect, RHFSwitch, RHFTextField, RHFUploadAvatar, RHFUpload, RHFUploadBox } from '../../../components/hook-form';
-import { poststaff } from '../../../../src/redux/slices/staff';
-import { useDispatch, useSelector } from '../../../redux/store';
-import { toast } from 'react-toastify';
+import { Box, Card, Grid, IconButton, InputAdornment, Stack, Typography } from '@mui/material';
 import FormControl from '@mui/material/FormControl';
 import InputLabel from '@mui/material/InputLabel';
 import MenuItem from '@mui/material/MenuItem';
 import OutlinedInput from '@mui/material/OutlinedInput';
 import Select from '@mui/material/Select';
+import { useTheme } from '@mui/material/styles';
+import { useRouter } from 'next/router';
+import { useCallback, useEffect, useState } from 'react';
+import { useForm } from 'react-hook-form';
+import { toast } from 'react-toastify';
+import * as Yup from 'yup';
+import Iconify from '../../../../src/components/iconify';
 import { getCity } from '../../../../src/redux/slices/city';
-import { styled, useTheme } from '@mui/material/styles';
+import { poststaff } from '../../../../src/redux/slices/staff';
+import FormProvider, { RHFSelect, RHFTextField, RHFUploadAvatar } from '../../../components/hook-form';
+import { useDispatch, useSelector } from '../../../redux/store';
 
 export const city = [{ label: 'ALL' }, { label: 'RAIPUR' },
 { label: 'DURG' }, { label: 'BHILAI  ' }, { label: 'BILASPUR' }, { label: 'KANKER' }];

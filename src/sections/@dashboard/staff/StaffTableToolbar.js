@@ -1,11 +1,11 @@
 import PropTypes from 'prop-types';
 // @mui
-import { Stack, InputAdornment, TextField, MenuItem, Button } from '@mui/material';
+import { InputAdornment, Stack, TextField } from '@mui/material';
 // components
-import Iconify from '../../../components/iconify';
 import { LoadingButton } from '@mui/lab';
+import Iconify from '../../../components/iconify';
 
-import { CSVLink, CSVDownload } from 'react-csv';
+import { CSVLink } from 'react-csv';
 // ----------------------------------------------------------------------
 
 StaffTableToolbar.propTypes = {

@@ -1,18 +1,16 @@
-import * as Yup from 'yup';
-// form
 import { yupResolver } from '@hookform/resolvers/yup';
-import { useForm } from 'react-hook-form';
-import { useEffect, useState} from 'react';
-import { Stack, Card } from '@mui/material';
 import { LoadingButton } from '@mui/lab';
-import { useDispatch, useSelector } from '../../../../redux/store';
-import Iconify from '../../../../components/iconify';
-import { useSnackbar } from '../../../../components/snackbar';
-import FormProvider, { RHFTextField } from '../../../../components/hook-form';
-import { postForgetpassword } from '../../../../redux/slices/staff';
+import { Card, Stack } from '@mui/material';
+import { useRouter } from 'next/router';
+import { useEffect, useState } from 'react';
+import { useForm } from 'react-hook-form';
 import { toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
-import { useRouter } from 'next/router';
+import * as Yup from 'yup';
+import FormProvider, { RHFTextField } from '../../../../components/hook-form';
+import Iconify from '../../../../components/iconify';
+import { postForgetpassword } from '../../../../redux/slices/staff';
+import { useDispatch } from '../../../../redux/store';
 
 export default function ChangePasswordForm({ id }) {
   const { push } = useRouter();

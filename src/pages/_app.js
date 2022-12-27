@@ -14,16 +14,16 @@ import 'mapbox-gl/dist/mapbox-gl.css';
 import 'react-quill/dist/quill.snow.css';
 
 // slick-carousel
-import 'slick-carousel/slick/slick.css';
 import 'slick-carousel/slick/slick-theme.css';
+import 'slick-carousel/slick/slick.css';
 
 // lazy image
 import 'react-lazy-load-image-component/src/effects/blur.css';
 
 // ----------------------------------------------------------------------
 
-import PropTypes from 'prop-types';
 import { CacheProvider } from '@emotion/react';
+import PropTypes from 'prop-types';
 // next
 import Head from 'next/head';
 // redux
@@ -40,14 +40,14 @@ import ThemeProvider from '../theme';
 // locales
 import ThemeLocalization from '../locales';
 // components
+import { MotionLazyContainer } from '../components/animate';
 import { StyledChart } from '../components/chart';
 import ProgressBar from '../components/progress-bar';
+import { SettingsProvider, ThemeSettings } from '../components/settings';
 import SnackbarProvider from '../components/snackbar';
-import { MotionLazyContainer } from '../components/animate';
-import { ThemeSettings, SettingsProvider } from '../components/settings';
 
-import { ToastContainer, toast } from 'react-toastify';
-  import 'react-toastify/dist/ReactToastify.css';
+import { ToastContainer } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 // Check our docs
 // https://docs.minimals.cc/authentication/js-version
 

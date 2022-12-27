@@ -1,11 +1,11 @@
-import Head from 'next/head';
 import { Container } from '@mui/material';
-import { PATH_DASHBOARD } from '../../../../routes/paths';
-import DashboardLayout from '../../../../layouts/dashboard';
-import { useSettingsContext } from '../../../../components/settings';
+import Head from 'next/head';
 import CustomBreadcrumbs from '../../../../components/custom-breadcrumbs';
+import { useSettingsContext } from '../../../../components/settings';
+import DashboardLayout from '../../../../layouts/dashboard';
+import { useDispatch } from "../../../../redux/store";
+import { PATH_DASHBOARD } from '../../../../routes/paths';
 import { BlogsAddForm } from '../../../../sections/@dashboard/blogs';
-import { useDispatch, useSelector } from "../../../../redux/store";
 
 Add.getLayout = (page) => <DashboardLayout>{page}</DashboardLayout>;
 

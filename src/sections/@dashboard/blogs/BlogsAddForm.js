@@ -1,29 +1,22 @@
-import PropTypes from 'prop-types';
-import * as Yup from 'yup';
-import { useCallback, useEffect, useMemo, useState } from 'react';
-import { useRouter } from 'next/router';
-import { useForm } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
-import { styled } from '@mui/material/styles';
-import { ToastContainer, toast } from 'react-toastify';
-import 'react-toastify/dist/ReactToastify.css';
 import { LoadingButton } from '@mui/lab';
-import { Card, Chip, Grid, Stack, TextField, Typography, Autocomplete, Box } from '@mui/material';
-import { PATH_DASHBOARD } from '../../../routes/paths';
-import { useSelector, useDispatch } from "../../../redux/store"
-import { useSnackbar } from '../../../components/snackbar';
+import { Autocomplete, Box, Card, Chip, Grid, Stack, TextField, Typography } from '@mui/material';
+import { styled } from '@mui/material/styles';
 import { DatePicker } from '@mui/x-date-pickers/DatePicker';
+import { useRouter } from 'next/router';
+import PropTypes from 'prop-types';
+import { useCallback, useEffect, useState } from 'react';
+import { Controller, useForm } from 'react-hook-form';
+import { toast, ToastContainer } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
+import * as Yup from 'yup';
 import FormProvider, {
-    RHFSwitch,
-    RHFSelect,
-    RHFEditor,
-    RHFUpload,
-    RHFTextField,
-    RHFUploadAvatar,
+    RHFEditor, RHFSelect, RHFTextField,
+    RHFUploadAvatar
 } from '../../../components/hook-form';
-import { putBlogmanagements, postBlogmanagements } from "../../../redux/slices/blogmanagement";
-import { Controller } from 'react-hook-form';
-
+import { postBlogmanagements, putBlogmanagements } from "../../../redux/slices/blogmanagement";
+import { useDispatch } from "../../../redux/store";
+ 
 const TAGS_OPTION = [
     'Toy Story 3',
     'Logan',

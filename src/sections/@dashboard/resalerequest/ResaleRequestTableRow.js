@@ -1,10 +1,8 @@
 import PropTypes from 'prop-types';
-import { useState, useEffect } from 'react';
-import { sentenceCase } from 'change-case';
 // @mui
+import { TableCell, TableRow } from '@mui/material';
 import { useTheme } from '@mui/material/styles';
-import { TableRow, Checkbox, Button, TableCell, Typography, MenuItem, IconButton } from '@mui/material';
-
+ 
 
 ResaleRequestTableRow.propTypes = {
   row: PropTypes.object,
