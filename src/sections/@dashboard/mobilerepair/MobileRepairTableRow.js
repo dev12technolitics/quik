@@ -5,6 +5,7 @@ import moment from 'moment';
 import PropTypes from 'prop-types';
 import { useEffect, useState } from 'react';
 import { toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 import {
   onCloseModal, onOpenModal
 } from '../../../redux/slices/calendar';
@@ -20,15 +21,17 @@ MobileRepairTableRow.propTypes = {
   index: PropTypes.number,
 };
 
-export default function MobileRepairTableRow({ row, index, onDetailRow}) {
+export default function MobileRepairTableRow({ row, index, onDetailRow }) {
   const theme = useTheme();
   const dispatch = useDispatch();
   const { service_id, name, contact_no, locality, city, status, model_no, date_time, _id } = row;
 
+  console.log("row123", row)
+
   const [statusPage, setStatusPage] = useState(null);
 
 
-  const [statusfor, setStatusfor] = useState(); 
+  const [statusfor, setStatusfor] = useState();
 
   useEffect(() => {
     if (status == 'Open') {
@@ -52,12 +55,19 @@ export default function MobileRepairTableRow({ row, index, onDetailRow}) {
     }
   }, [status]);
 
-  const onSubmit = async (data) => {
+  const onStatus = async (data) => {
     setStatusPage(data);
+  };
+
+  const onSubmit = async (value) => {
+    
+    console.log("value",_id)
+    setStatusPage(value);
     const payload = {
-      status: data,
+      status: value,
+      user_id:_id,
     };
-    const response = await axios.put('/mobilerepair/updatestatus/' + _id, payload);
+    const response = await axios.post('/mobilestatus/add', payload);
     toast.success(response.data?.message);
   };
 
@@ -75,6 +85,7 @@ export default function MobileRepairTableRow({ row, index, onDetailRow}) {
     dispatch(onOpenModal());
   };
 
+  console.log("id",_id)
 
   return (
     <>
@@ -84,7 +95,6 @@ export default function MobileRepairTableRow({ row, index, onDetailRow}) {
 
         <TableCell align="left">{service_id}</TableCell>
 
-        
 
         <TableCell align="left" sx={{ cursor: 'pointer' }} onClick={() => onDetailRow()} >
           {name}
@@ -102,20 +112,24 @@ export default function MobileRepairTableRow({ row, index, onDetailRow}) {
           <Select
             labelId="demo-simple-select-standard-label"
             id="demo-simple-select-standard"
-            onChange={(e) => onSubmit(e.target.value)}
+            onChange={(e) => onStatus(e.target.value)}
+            // onChange={(e) => onSubmit(e.target.value)}
             value={statusPage}
             sx={{ height: '40px', width: 120 }}
           >
-            <MenuItem value={'Open'} >Open</MenuItem>
-            <MenuItem value={'Pickup Agent Assigned'} onClick={() => handleAddEvent('Pickup Agent Assigned')} >Pickup Agent Assigned</MenuItem>
+            <MenuItem value={'Open'} onClick={() => onSubmit('Open')} >Open</MenuItem>
 
+            <MenuItem value={'Pickup Agent Assigned'} onClick={() => handleAddEvent('Pickup Agent Assigned')} >Pickup Agent Assigned</MenuItem>
             <MenuItem value={'Repairing'} onClick={() => handleAddEvent('Repairing')}>Repairing</MenuItem>
             <MenuItem value={'Stucked'} onClick={() => handleAddEvent('Stucked')}>Stucked</MenuItem>
             <MenuItem value={'On Review'} onClick={() => handleAddEvent('On Review')}>On Review</MenuItem>
             <MenuItem value={'Ready To Review'} onClick={() => handleAddEvent('Ready To Review')}>Ready To Review</MenuItem>
-            <MenuItem value={'Delivered'}>Delivered</MenuItem>
+
+            <MenuItem value={'Delivered'} onClick={() => onSubmit('Delivered')} >Delivered</MenuItem>
+
             <MenuItem value={'Canceled'} onClick={() => handleAddEvent('Canceled')}>Canceled</MenuItem>
-            <MenuItem value={'Reopen'}>Reopen</MenuItem>
+
+            <MenuItem value={'Reopen'} onClick={() => onSubmit('Reopen')}>Reopen</MenuItem>
           </Select>
         </TableCell>
 
@@ -124,18 +138,18 @@ export default function MobileRepairTableRow({ row, index, onDetailRow}) {
       {statusfor == 'Pickup Agent Assigned' ?
         <Dialog fullWidth maxWidth="md" open={openModal} onClose={handleCloseModal}>
           <DialogTitle>Select a pickup agent for ({city}) </DialogTitle>
-
           <PickupForm
             mobilerepaircity={city}
             onCancel={handleCloseModal}
+            statusPage={statusPage}
+            id={_id}
           />
-
         </Dialog>
         : null}
 
       {statusfor == 'Repairing' ?
         <Dialog fullWidth maxWidth="md" open={openModal} onClose={handleCloseModal}>
-          <DialogTitle>Details</DialogTitle>
+          <DialogTitle>Select a service manager for ({city})</DialogTitle>
           <RepairingForm
             mobilerepaircity={city}
             onCancel={handleCloseModal}

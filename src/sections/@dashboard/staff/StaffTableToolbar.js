@@ -2,10 +2,10 @@ import PropTypes from 'prop-types';
 // @mui
 import { InputAdornment, Stack, TextField } from '@mui/material';
 // components
-import { LoadingButton } from '@mui/lab';
+// import { LoadingButton } from '@mui/lab';
 import Iconify from '../../../components/iconify';
 
-import { CSVLink } from 'react-csv';
+// import { CSVLink } from 'react-csv';
 // ----------------------------------------------------------------------
 
 StaffTableToolbar.propTypes = {
@@ -16,8 +16,8 @@ StaffTableToolbar.propTypes = {
 export default function StaffTableToolbar({
   filterName,
   onFilterName,
-  getDownload,
-  headers
+  // getDownload,
+  // headers
 }) {
   return (
     <Stack
@@ -45,7 +45,7 @@ export default function StaffTableToolbar({
         }}
       />
 
-      <CSVLink
+      {/* <CSVLink
         data={getDownload ? getDownload : null}
         headers={headers ? headers : null}
         filename="staff.csv"
@@ -55,7 +55,7 @@ export default function StaffTableToolbar({
         <LoadingButton type="submit" variant="contained" size="" sx={{ py: 2, px: 2 }}>
           Excel
         </LoadingButton>
-      </CSVLink>
+      </CSVLink> */}
     </Stack>
   );
 }

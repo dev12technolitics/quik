@@ -33,18 +33,11 @@ const TABLE_HEAD = [
     { id: 'profile', label: 'Profile', align: 'left' },
     { id: 'contact_no', label: 'Contact No', align: 'left' },
     { id: 'designation', label: 'Designation', align: 'left' },
-    { id: 'city', label: 'City', align: 'left' },
+    { id: 'city', label: 'City', align: 'left' , width:"100px" },
     { id: '', label: 'Status', align: 'left' },
     { id: '' },
 ];
 
-const headers = [
-    { label: 'Name', key: 'name' },
-    { label: 'Profile', key: 'profile' },
-    { label: 'Contact No', key: 'contact_no' },
-    { label: 'Designation', key: 'designation' },
-    { label: 'City', key: 'city' },
-];
 
 Staff.getLayout = (page) => <DashboardLayout>{page}</DashboardLayout>;
 
@@ -96,9 +89,6 @@ export default function Staff() {
         }
       }, [allstaff]);
    
-    useEffect(() => {
-        setGetDownload(allstaff);
-    }, [allstaff]);
 
     const dataFiltered = applyFilter({
         inputData: tableData,
@@ -130,6 +120,8 @@ export default function Staff() {
         push(`/dashboard/staff/add/${id}`);
     };
 
+    console.log("allstaff",allstaff)
+
     return (
         <>
             <Head>
@@ -156,8 +148,8 @@ export default function Staff() {
                     <StaffTableToolbar
                         filterName={filterName}
                         onFilterName={handleFilterName}
-                        headers={headers}
-                        getDownload={getDownload}
+                        // headers={headers}
+                        // getDownload={getDownload}
                     />
 
                     <TableContainer sx={{ position: 'relative', overflow: 'unset' }}>

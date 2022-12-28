@@ -71,7 +71,7 @@ export default function StaffAddForm() {
 
     const NewSchema = Yup.object().shape({
         name: Yup.string().required('Name is required'),
-        // profile: Yup.mixed().test('required', 'Profile Pictures is required', (value) => value !== ''),
+        profile: Yup.mixed().test('required', 'Profile Pictures is required', (value) => value !== ''),
         contact_no: Yup.string()
             .min(10, 'Password must be at least 10 characters')
             .max(10, 'Password must be at least 10 characters')
@@ -86,7 +86,7 @@ export default function StaffAddForm() {
         profile: '',
         name: '',
         contact_no: '',
-        city: [],
+        city: '',
         designation: '',
         password: '',
     };
@@ -113,11 +113,12 @@ export default function StaffAddForm() {
         try {
             await new Promise((resolve) => setTimeout(resolve, 500));
             let formData = new FormData();
-            // formData.append('profile', data.profile);
+            formData.append('profile', data.profile);
             formData.set('password', data.password);
             formData.set('name', data.name);
             formData.set('contact_no', data.contact_no);
-            formData.set('city', cityType);
+            // formData.set('city', cityType);
+            formData.set('city', JSON.stringify(cityType));
             formData.set('designation', data.designation);
             dispatch(poststaff(formData, toast, push, reset, setIsLoading));
         } catch (error) {

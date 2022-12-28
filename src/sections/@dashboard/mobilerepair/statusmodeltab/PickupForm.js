@@ -6,13 +6,16 @@ import { useRouter } from 'next/router';
 import PropTypes from 'prop-types';
 import { useEffect, useState } from 'react';
 import { useForm } from 'react-hook-form';
-import { toast, ToastContainer } from 'react-toastify';
+import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import * as Yup from 'yup';
 import { getstaff } from '../../../../../src/redux/slices/staff';
 import FormProvider, { RHFSelect } from '../../../../components/hook-form';
-import { putpickup } from "../../../../redux/slices/mobilerepair";
+// import { putpickup } from '../../../../redux/slices/mobilerepair';
+import { toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 import { useDispatch, useSelector } from '../../../../redux/store';
+import axios from '../../../../utils/axios';
 
 const LabelStyle = styled(Typography)(({ theme }) => ({
     ...theme.typography.subtitle2,
@@ -25,7 +28,7 @@ PickupForm.propTypes = {
     oneposts: PropTypes.object,
 };
 
-export default function PickupForm({ mobilerepaircity, id, onCancel }) {
+export default function PickupForm({ mobilerepaircity, id, onCancel, statusPage }) {
 
     console.log("mobilerepaircity", mobilerepaircity)
 
@@ -71,19 +74,36 @@ export default function PickupForm({ mobilerepaircity, id, onCancel }) {
 
     const values = watch();
 
+    // const onSubmit = async (data) => {
+    //     setisLoading(true);
+    //     console.log("data", data)
+    //     try {
+    //         await new Promise((resolve) => setTimeout(resolve, 500));
+    //         const payload = {
+    //             pickup: data.pickup,
+    //             status: statusPage
+    //         };
+    //         dispatch(putpickup(id, payload, toast, push, reset, setisLoading));
+    //     }
+    //     catch (error) {
+    //         console.error(error);
+    //     }
+    // }
+
     const onSubmit = async (data) => {
         setisLoading(true);
-        try {
-            await new Promise((resolve) => setTimeout(resolve, 500));
-            const payload = {
-                pickup: data.pickup
-            };
-            dispatch(putpickup(id, payload, toast, push, reset, setisLoading));
-        }
-        catch (error) {
-            console.error(error);
-        }
-    }
+        const payload = {
+            pickup: data.pickup,
+            status: statusPage,
+            user_id:id,
+        };
+        const response = await axios.post('/mobilestatus/add', payload);
+        setisLoading(false);
+        toast.success(response.data?.message);
+        reset()
+        onCancel()
+        push('/dashboard/mobilerepair/');
+    };
 
     return (
         <FormProvider methods={methods} onSubmit={handleSubmit(onSubmit)} >
@@ -94,7 +114,7 @@ export default function PickupForm({ mobilerepaircity, id, onCancel }) {
 
                         <RHFSelect name="pickup" label="Pickup Agent Assigned "
                         >
-                            <option value={null}>Select Pickup Agent Assigned </option>
+                            <option value={null}>Pickup Agent Assigned </option>
                             {mobilestaff.map((option, index) => (
                                 <option key={index}
                                     value={option?.name}

@@ -9,7 +9,7 @@ import FormProvider, { RHFTextField } from '../../../components/hook-form';
 import Image from '../../../components/image';
 import { getBrand } from '../../../redux/slices/brand';
 import { useDispatch, useSelector } from '../../../redux/store';
-import { _analyticOrderTimeline } from '../../../_mock/arrays';
+import axios from '../../../utils/axios';
 import MobileDetailTimeline from './MobileDetailTimeline';
 
 MobileDetail.propTypes = {
@@ -17,7 +17,7 @@ MobileDetail.propTypes = {
     currentUser: PropTypes.object,
 };
 
-export default function MobileDetail({ MobileData }) {
+export default function MobileDetail({ MobileData , id}) {
     const { push } = useRouter();
     const dispatch = useDispatch();
 
@@ -25,12 +25,14 @@ export default function MobileDetail({ MobileData }) {
     const [designationfor, setDesignationFor] = useState('');
     const [isLoading, setIsLoading] = useState(false);
 
+    const [applicationproceeding, setApplicationproceeding] = useState([]);
+
     const { allBrand } = useSelector((state) => state?.brand);
 
     console.log("allBrand", allBrand)
     console.log("MobileData", MobileData)
 
-    const newbrand = allBrand.filter((item) => item.name == MobileData.brand_name)
+    const newbrand = allBrand.filter((item) => item.name == MobileData?.brand_name)
 
     const data = newbrand[0];
     console.log("data ", data?.logo)
@@ -46,13 +48,9 @@ export default function MobileDetail({ MobileData }) {
         city: MobileData?.city ? MobileData?.city : '',
         locality: MobileData?.locality ? MobileData?.locality : '',
         contact_no: MobileData?.contact_no ? MobileData?.contact_no : '',
-
         brand_name: MobileData?.brand_name ? MobileData?.brand_name : '',
-
         model_no: MobileData?.model_no ? MobileData?.model_no : '',
-
         problem_facing: MobileData?.problem_facing ? MobileData?.problem_facing : '',
-
         name: MobileData?.name ? MobileData?.name : '',
         email_id: MobileData?.email_id ? MobileData?.email_id : '',
         pincode: MobileData?.pincode ? MobileData?.pincode : '',
@@ -88,6 +86,17 @@ export default function MobileDetail({ MobileData }) {
         }
     }, [MobileData]);
 
+
+    useEffect(() => {
+        const onGramApi = async (id) => {
+          const response = await axios.get('/mobilestatus/all/' + id);
+          console.log("response?.data?.mobilestatus", response?.data?.mobilestatus);
+          setApplicationproceeding(response?.data?.mobilestatus);
+        };
+        onGramApi(id);
+      }, [id]);
+      
+    
     return (
         <FormProvider methods={methods}>
 
@@ -115,7 +124,7 @@ export default function MobileDetail({ MobileData }) {
                             {/* <MobileTimeline title="Order Timeline" /> */}
                             <MobileDetailTimeline
                              title="Order Timeline"
-                             list={_analyticOrderTimeline}
+                             list= {applicationproceeding}
                             />
                         </Grid>
 

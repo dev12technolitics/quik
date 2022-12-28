@@ -1,7 +1,7 @@
 import PropTypes from 'prop-types';
 import { useEffect, useState } from 'react';
 // @mui
-import { IconButton, MenuItem, TableCell, TableRow } from '@mui/material';
+import { Box, IconButton, MenuItem, TableCell, TableRow } from '@mui/material';
 import Select from '@mui/material/Select';
 import { useTheme } from '@mui/material/styles';
 import Iconify from '../../../components/iconify';
@@ -20,7 +20,8 @@ StaffTableRow.propTypes = {
 export default function StaffTableRow({ row, index, onEditRow, }) {
   const theme = useTheme();
 
-  const { status, name, profile, contact_no, designation, city, _id } = row;
+  const { status, name, profile, contact_no, designation, city_name, _id } = row;
+
   const [openPopover, setOpenPopover] = useState(null);
   const [openMenu, setOpenMenuActions] = useState(null);
   const [openConfirm, setOpenConfirm] = useState(false);
@@ -45,7 +46,7 @@ export default function StaffTableRow({ row, index, onEditRow, }) {
   };
 
 
-  
+
   useEffect(() => {
     if (status == 'Active') {
       setStatusPage('Active');
@@ -55,7 +56,7 @@ export default function StaffTableRow({ row, index, onEditRow, }) {
   }, [status]);
 
   const onSubmit = async (data) => {
-    console.log("data",data)
+    console.log("data", data)
     setStatusPage(data);
     const payload = {
       status: data,
@@ -63,6 +64,8 @@ export default function StaffTableRow({ row, index, onEditRow, }) {
     const response = await axios.put('/adminuser/update/' + _id, payload);
     toast.success(response.data?.message);
   };
+
+
 
   return (
     <TableRow hover >
@@ -85,47 +88,52 @@ export default function StaffTableRow({ row, index, onEditRow, }) {
       <TableCell align="left">{contact_no}</TableCell>
 
       <TableCell align="left">{designation}</TableCell>
-
-      <TableCell align="left">{city}</TableCell>
-
-      <TableCell align="left">
-        <Select
-          labelId="demo-simple-select-standard-label"
-          id="demo-simple-select-standard"
-          onChange={(e) => onSubmit(e.target.value)}
-          value={statusPage}
-          sx={{ height: '40px', width: 120 }}
-        >
-          <MenuItem value={'Active'}>Active</MenuItem>
-          <MenuItem value={'InActive'}>InActive</MenuItem>
-        </Select>
-      </TableCell>
+      
+        <TableCell align="left">
+          {city_name.map((item, index) => (
+            <Box>{item.city_name}</Box>
+          ))}
+        </TableCell>
 
 
-      <TableCell align="right">
-        <IconButton color={openPopover ? 'inherit' : 'default'} onClick={handleOpenPopover}>
-          <Iconify icon="eva:more-vertical-fill" />
-        </IconButton>
-      </TableCell>
-
-      <TableCell align="left">
-        <MenuPopover
-          open={openPopover}
-          onClose={handleClosePopover}
-          arrow="right-top"
-          sx={{ width: 140 }}>
-          <MenuItem
-            onClick={() => {
-              onEditRow();
-              handleClosePopover();
-            }}
+        <TableCell align="left">
+          <Select
+            labelId="demo-simple-select-standard-label"
+            id="demo-simple-select-standard"
+            onChange={(e) => onSubmit(e.target.value)}
+            value={statusPage}
+            sx={{ height: '40px', width: 120 }}
           >
-            <Iconify icon="eva:edit-fill" />
-            Edit
-          </MenuItem>
-        </MenuPopover>
+            <MenuItem value={'Active'}>Active</MenuItem>
+            <MenuItem value={'InActive'}>InActive</MenuItem>
+          </Select>
+        </TableCell>
 
-      </TableCell>
+
+        <TableCell align="right">
+          <IconButton color={openPopover ? 'inherit' : 'default'} onClick={handleOpenPopover}>
+            <Iconify icon="eva:more-vertical-fill" />
+          </IconButton>
+        </TableCell>
+
+        <TableCell align="left">
+          <MenuPopover
+            open={openPopover}
+            onClose={handleClosePopover}
+            arrow="right-top"
+            sx={{ width: 140 }}>
+            <MenuItem
+              onClick={() => {
+                onEditRow();
+                handleClosePopover();
+              }}
+            >
+              <Iconify icon="eva:edit-fill" />
+              Edit
+            </MenuItem>
+          </MenuPopover>
+
+        </TableCell>
     </TableRow>
   );
 }

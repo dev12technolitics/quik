@@ -75,7 +75,7 @@ export function getstaff() {
     dispatch(slice.actions.startLoading());
     try {
       const response = await axios.get('/adminuser/all', { headers: header });
-      dispatch(slice.actions.getstaffSuccess(response.data.adminusers));
+      dispatch(slice.actions.getstaffSuccess(response.data.users));
     } catch (error) {
       dispatch(slice.actions.hasError(error));
     }
@@ -102,6 +102,7 @@ export function poststaff(formData, toast, push, reset, setIsLoading) {
       if (response.data?.status == true) {
         setIsLoading(false);
         toast.success(response.data?.message);
+        reset()
         push('/dashboard/staff');
       } else {
         setIsLoading(false);
