@@ -75,15 +75,15 @@ export function AuthProvider({ children }) {
 
       if (isAuthenticated) {
         const user = await auth0Client.getUser();
-
         dispatch({
+    
           type: 'INITIAL',
           payload: {
             isAuthenticated,
             user: {
               ...user,
               displayName: user?.name,
-              photoURL: user?.picture,
+              photoURL: user?.profile,
               role: 'admin',
             },
           },

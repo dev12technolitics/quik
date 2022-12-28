@@ -42,6 +42,7 @@ function getStyles(name, personName, theme) {
 }
 
 export default function StaffAddForm({ id, staffData }) {
+    console.log("staffData",staffData);
     const { push } = useRouter();
     const dispatch = useDispatch();
     const theme = useTheme();
@@ -73,6 +74,7 @@ export default function StaffAddForm({ id, staffData }) {
         name: staffData?.name || '',
         contact_no: staffData?.contact_no ? staffData?.contact_no : '',
         designation: staffData?.designation ? staffData?.designation : '',
+        city: staffData ? staffData?.city_name : '',
     };
 
     const methods = useForm({

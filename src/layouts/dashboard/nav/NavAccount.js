@@ -32,11 +32,11 @@ export default function NavAccount() {
     <NextLink href={PATH_DASHBOARD.user.account} passHref>
       <Link underline="none" color="inherit">
         <StyledRoot>
-          <CustomAvatar src={user?.photoURL} alt={user?.displayName} name={user?.displayName} />
+          <CustomAvatar src={user?.profile} alt={user?.user} name={user?.user} />
 
           <Box sx={{ ml: 2, minWidth: 0 }}>
             <Typography variant="subtitle2" noWrap>
-              {user?.displayName}
+              {user?.user}
             </Typography>
 
             <Typography variant="body2" noWrap sx={{ color: 'text.secondary' }}>

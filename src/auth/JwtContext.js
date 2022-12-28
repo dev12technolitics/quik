@@ -81,8 +81,7 @@ export function AuthProvider({ children }) {
     try {
       const accessToken = typeof window !== 'undefined' ? localStorage.getItem('accessToken') : '';
       const userId = typeof window !== 'undefined' ? localStorage.getItem('id') : '';
-      console.log("userId",userId);
-      console.log("accessToken",accessToken);
+     
       
         const headers = {
           accessToken: "x-access-token"
@@ -95,9 +94,7 @@ export function AuthProvider({ children }) {
           headers: headers
         });
 
-        const user  = response.data.users;
-        console.log("ondata",response)
-
+        const user  = response.data.adminuser;
         dispatch({
           type: 'INITIAL',
           payload: {
@@ -139,8 +136,6 @@ export function AuthProvider({ children }) {
 
     const { accessToken, user, id } = response.data;
 
-    console.log("admin jwt:", response?.data)
-    console.log("admin jwt iD:", response?.data.id)
     setSession(accessToken, id);
     initialize();
 
