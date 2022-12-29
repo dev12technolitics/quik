@@ -7,6 +7,7 @@ import MenuItem from '@mui/material/MenuItem';
 import OutlinedInput from '@mui/material/OutlinedInput';
 import Select from '@mui/material/Select';
 import { useTheme } from '@mui/material/styles';
+import { indexOf } from 'lodash';
 import { useRouter } from 'next/router';
 import { useCallback, useEffect, useState } from 'react';
 import { useForm } from 'react-hook-form';
@@ -42,7 +43,9 @@ function getStyles(name, personName, theme) {
 }
 
 export default function StaffAddForm({ id, staffData }) {
-    console.log("staffData",staffData);
+    // console.log("staffData",staffData?.city_name[]);
+
+
     const { push } = useRouter();
     const dispatch = useDispatch();
     const theme = useTheme();
@@ -69,14 +72,32 @@ export default function StaffAddForm({ id, staffData }) {
     const NewSchema = Yup.object().shape({
     });
 
+     const arrayCity =staffData?.city_name;
+
+     console.log("array:",arrayCity);
+
+     const City =arrayCity?.map((item)=>{
+        const arrS =item.city_name
+    return arrS});
+
+    const cityString = City?.toString();
+//    console.log("Cityyyy:::",cityString.indexOf(0))
+//     console.log("kmccmk",cityString)
+
+    //  console.log(arrayCity?.map((item)=>{
+    //     const arrS =item.city_name
+    // return arrS}),"jkdbjhbdsbbhjadf");
+    //  console.log("City:", City);
+    //  const arrCity= City.indexOf("city_name");
     const defaultValues = {
         profile: staffData?.profile || '',
         name: staffData?.name || '',
         contact_no: staffData?.contact_no ? staffData?.contact_no : '',
         designation: staffData?.designation ? staffData?.designation : '',
-        city: staffData ? staffData?.city_name : '',
+        city:cityString ,
     };
 
+    console.log("DEfault:::",defaultValues)
     const methods = useForm({
         resolver: yupResolver(NewSchema),
         defaultValues,
@@ -105,7 +126,9 @@ export default function StaffAddForm({ id, staffData }) {
 
     const onSubmit = async (data) => {
         setIsLoading(true);
+
         console.log('data', data);
+        console.log('City type', JSON.stringify(cityType));
         try {
             await new Promise((resolve) => setTimeout(resolve, 500));
             let formData = new FormData();

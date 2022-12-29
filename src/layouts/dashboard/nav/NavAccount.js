@@ -29,14 +29,14 @@ export default function NavAccount() {
   const { user } = useAuthContext();
 
   return (
-    <NextLink href={PATH_DASHBOARD.user.account} passHref>
+    // <NextLink href={PATH_DASHBOARD.user.account} passHref>
       <Link underline="none" color="inherit">
         <StyledRoot>
-          <CustomAvatar src={user?.profile} alt={user?.user} name={user?.user} />
+          <CustomAvatar src={user?.profile} alt={user?.name} name={user?.name} />
 
           <Box sx={{ ml: 2, minWidth: 0 }}>
             <Typography variant="subtitle2" noWrap>
-              {user?.user}
+              {user?.name}
             </Typography>
 
             <Typography variant="body2" noWrap sx={{ color: 'text.secondary' }}>
@@ -45,6 +45,6 @@ export default function NavAccount() {
           </Box>
         </StyledRoot>
       </Link>
-    </NextLink>
+    // </NextLink>
   );
 }
