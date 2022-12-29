@@ -91,7 +91,7 @@ export default function StaffTableRow({ row, index, onEditRow, }) {
       
         <TableCell align="left">
           {city_name.map((item, index) => (
-            <Box>{item.city_name}</Box>
+            <Box key={index}>{item.city_name}</Box>
           ))}
         </TableCell>
 
