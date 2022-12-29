@@ -40,9 +40,16 @@ export default function PickupForm({ mobilerepaircity, id, onCancel, statusPage 
 
     const { allstaff } = useSelector((state) => state?.staff);
 
-    console.log("allstaff", allstaff)
+    let finalaraay = allstaff?.filter((single) => single?.city_name?.filter((i) => { i?._id == mobilerepaircity }) && single.designation === 'PICKAPP AGENT')
+    console.log("123456", finalaraay)
 
-    const mobilestaff = allstaff.filter((item) => item.designation === 'PICKAPP AGENT')
+    // && item.city == mobilerepaircity 
+    const mobilestaff = allstaff.filter((item) => item.designation === 'PICKAPP AGENT' && item.city_name.map((items) => (
+        items.city_name == mobilerepaircity
+    ))
+    )
+
+
 
     console.log("mobilestaff", mobilestaff)
 
@@ -74,30 +81,17 @@ export default function PickupForm({ mobilerepaircity, id, onCancel, statusPage 
 
     const values = watch();
 
-    // const onSubmit = async (data) => {
-    //     setisLoading(true);
-    //     console.log("data", data)
-    //     try {
-    //         await new Promise((resolve) => setTimeout(resolve, 500));
-    //         const payload = {
-    //             pickup: data.pickup,
-    //             status: statusPage
-    //         };
-    //         dispatch(putpickup(id, payload, toast, push, reset, setisLoading));
-    //     }
-    //     catch (error) {
-    //         console.error(error);
-    //     }
-    // }
 
     const onSubmit = async (data) => {
         setisLoading(true);
         const payload = {
             pickup: data.pickup,
             status: statusPage,
-            user_id:id,
+            user_id: id,
         };
+        console.log("payload", payload)
         const response = await axios.post('/mobilestatus/add', payload);
+        console.log("response", response)
         setisLoading(false);
         toast.success(response.data?.message);
         reset()
@@ -131,13 +125,6 @@ export default function PickupForm({ mobilerepaircity, id, onCancel, statusPage 
                                     Add Now
                                 </LoadingButton>
                             </DialogActions>
-
-                            {/* <DialogActions>
-                                    <Box sx={{ flexGrow: 1 }} />
-                                    <Button variant="outlined" color="inherit" onClick={onCancel}>
-                                        Cancel
-                                    </Button>
-                                </DialogActions> */}
 
                         </Stack>
 

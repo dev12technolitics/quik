@@ -10,12 +10,12 @@ import { useState } from 'react';
 import { CSVLink } from 'react-csv';
 // ----------------------------------------------------------------------
 
-StaffTableToolbar.propTypes = {
+MobilerepairTableToolbar.propTypes = {
   filterName: PropTypes.string,
   onFilterName: PropTypes.func,
 };
 
-export default function StaffTableToolbar({
+export default function MobilerepairTableToolbar({
   filterName,
   onFilterName,
   getDownload,
@@ -41,8 +41,8 @@ export default function StaffTableToolbar({
       <TextField
         fullWidth
         value={filterName}
-        onChange={onFilterName} 
-        placeholder="Search by name, contact number and designation"
+        onChange={onFilterName}
+        placeholder="Search by name, contact number, service id and locality"
         InputProps={{
           startAdornment: (
             <InputAdornment position="start">
@@ -106,7 +106,7 @@ export default function StaffTableToolbar({
       <CSVLink
         data={getDownload ? getDownload : null}
         headers={headers ? headers : null}
-        filename="staff.csv"
+        filename="Mobilerepair.csv"
         target="_blank"
         style={{ textDecoration: 'none' }}
       >

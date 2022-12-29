@@ -2,8 +2,8 @@ import { useEffect, useState } from 'react';
 // next
 import Head from 'next/head';
 import { useRouter } from 'next/router';
- 
-// @mui
+
+// @mui 
 import {
     Card, Container, Table, TableBody, TableContainer
 } from '@mui/material';
@@ -13,6 +13,9 @@ import { PATH_DASHBOARD } from '../../../routes/paths';
 // layouts
 import DashboardLayout from '../../../layouts/dashboard';
 // components
+import 'react-toastify/dist/ReactToastify.css';
+import { getCity } from '../../../../src/redux/slices/city';
+import { getResaleRequest } from '../../../../src/redux/slices/resalerequest';
 import CustomBreadcrumbs from '../../../components/custom-breadcrumbs';
 import Scrollbar from '../../../components/scrollbar';
 import { useSettingsContext } from '../../../components/settings';
@@ -21,27 +24,34 @@ import {
     TableHeadCustom, TableNoData, TablePaginationCustom,
     TableSkeleton, useTable
 } from '../../../components/table';
-// sections
-
-import { getResaleRequest } from '../../../../src/redux/slices/resalerequest';
 import { useDispatch, useSelector } from '../../../redux/store';
-import { ResaleRequestTableRow } from '../../../sections/@dashboard/resalerequest';
+import { ResaleRequestTableRow, ResaleRequestTableToolbar } from '../../../sections/@dashboard/resalerequest';
 
 const TABLE_HEAD = [
-  { id: 'index', label: 'SNO', align: 'left' },
-  { id: 'name', label: 'NAME', align: 'left' },
-  { id: 'contact_no', label: 'CONTACT NO', align: 'left' },
-  { id: 'email_id', label: 'EMAIL ID ', align: 'left' },
-  { id: 'brand', label: 'BRAND', align: 'left' },
-  { id: 'model', label: 'MODEL', align: 'left' },
-  { id: 'ram/rom', label: 'RAM/ROM', align: 'left' },
-  { id: 'city', label: 'CITY', align: 'left' },
-];
+    { id: 'index', label: 'SNO', align: 'left' },
+    { id: 'name', label: 'NAME', align: 'left' },
+    { id: 'contact_no', label: 'CONTACT NO', align: 'left' },
+    { id: 'email_id', label: 'EMAIL ID ', align: 'left' },
+    { id: 'brand', label: 'BRAND', align: 'left' },
+    { id: 'model', label: 'MODEL', align: 'left' },
+    { id: 'ram/rom', label: 'RAM/ROM', align: 'left' },
+    { id: 'city', label: 'CITY', align: 'left' },
+  ];
+  
+  const headers = [
+      { label: 'Name', key: 'name' },
+      { label: 'Profile Picture', key: 'profile' },
+      { label: 'Contact Number', key: 'contact_no' },
+      { label: 'Email Id', key: 'email_id' },
+      { label: 'Brand', key: 'brand' },
+      { label: 'Model', key: 'model' },
+      { label: 'Ram/Rom', key: 'ram/rom' },
+      { label: 'City', key: 'city' },
+  ];
 
+Pcrepair.getLayout = (page) => <DashboardLayout>{page}</DashboardLayout>;
 
-Contact.getLayout = (page) => <DashboardLayout>{page}</DashboardLayout>;
-
-export default function Contact() {
+export default function Pcrepair() {
     const {
         dense,
         page,
@@ -63,49 +73,49 @@ export default function Contact() {
 
     const [tableData, setTableData] = useState([]);
 
-    const [openConfirm, setOpenConfirm] = useState(false);
-
     const [filterName, setFilterName] = useState('');
 
-    const [filterRole, setFilterRole] = useState('all');
+    const [filterCity, setFilterCity] = useState('all')
 
-    const [filterStatus, setFilterStatus] = useState('all');
-
+    const [getDownload, setGetDownload] = useState([]);
 
     const dispatch = useDispatch();
 
     const { push } = useRouter();
 
     const { isLoading, allResaleRequest } = useSelector((state) => state?.resalerequest);
+    const { allCity } = useSelector((state) => state?.city);
 
+    // console.log("allResaleRequest", allResaleRequest)
     useEffect(() => {
         dispatch(getResaleRequest());
+        dispatch(getCity());
     }, [dispatch]);
 
     useEffect(() => {
         if (allResaleRequest?.length) {
-          setTableData(allResaleRequest);
+            setTableData(allResaleRequest);
         }
-      }, [allResaleRequest,handleDeleteRow]);
+    }, [allResaleRequest]);
+
+    useEffect(() => {
+        setGetDownload(allResaleRequest);
+    }, [allResaleRequest]);
 
     const dataFiltered = applyFilter({
         inputData: tableData,
         comparator: getComparator(order, orderBy),
         filterName,
-        filterRole,
-        filterStatus,
+        filterCity,
     });
 
     const dataInPage = dataFiltered.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage);
 
     const denseHeight = dense ? 52 : 72;
 
-    const isFiltered = filterName !== '' || filterRole !== 'all' || filterStatus !== 'all';
-
     const isNotFound =
         (!dataFiltered.length && !!filterName) || (!isLoading && !dataFiltered.length) ||
-        (!dataFiltered.length && !!filterRole) ||
-        (!dataFiltered.length && !!filterStatus);
+        (!dataFiltered.length && !!filterCity);
 
 
     const handleFilterName = (event) => {
@@ -113,21 +123,12 @@ export default function Contact() {
         setFilterName(event.target.value);
     };
 
-    const handleDeleteRow = (id) => {
-        const deleteRow = tableData.filter((row) => row.id !== id);
-        setSelected([]);
-        setTableData(deleteRow);
-        if (page > 0) {
-            if (dataInPage.length < 2) {
-                setPage(page - 1);
-            }
-        }
+    const handleFilterCity = (event) => {
+        setFilterCity(event.target.value);
     };
-
-   
     return (
         <>
-            <Head>
+           <Head>
                 <title>Resale Request</title>
             </Head>
             <Container maxWidth={themeStretch ? false : 'lg'}>
@@ -141,6 +142,15 @@ export default function Contact() {
                 />
 
                 <Card>
+                <ResaleRequestTableToolbar
+                        filterName={filterName}
+                        onFilterName={handleFilterName}
+                        filterCity={filterCity}
+                        optionsCity={allCity}
+                        onFilterCity={handleFilterCity}
+                        headers={headers}
+                        getDownload={getDownload}
+                    />
                     <TableContainer sx={{ position: 'relative', overflow: 'unset' }}>
                         <Scrollbar>
                             <Table size={dense ? 'small' : 'medium'} sx={{ minWidth: 800 }}>
@@ -164,10 +174,10 @@ export default function Contact() {
                                         .map((row, index) =>
                                             row ? (
                                                 <ResaleRequestTableRow
-                                                    key={row.id}
-                                                    row={row}
-                                                    index={index}
-                                                />
+                                                key={row.id}
+                                                row={row}
+                                                index={index}
+                                            />
                                             ) : (
                                                 !isNotFound && <TableSkeleton key={index} sx={{ height: denseHeight }} />
                                             )
@@ -197,7 +207,7 @@ export default function Contact() {
 
 // ----------------------------------------------------------------------
 
-function applyFilter({ inputData, comparator, filterStatus, filterRole }) {
+function applyFilter({ inputData, comparator, filterName, filterCity }) {
     const stabilizedThis = inputData.map((el, index) => [el, index]);
 
     stabilizedThis.sort((a, b) => {
@@ -206,11 +216,24 @@ function applyFilter({ inputData, comparator, filterStatus, filterRole }) {
         return a[1] - b[1];
     });
 
-    console.log("inputData:", inputData);
 
     inputData = stabilizedThis.map((el) => el[0]);
 
-  
+    if (filterName) {
+        inputData = inputData.filter((user) =>
+            user.name?.toLowerCase().indexOf(filterName.toLowerCase()) !== -1 ||
+            user.email_id?.toLowerCase().indexOf(filterName.toLowerCase()) !== -1 ||
+            user.brand?.toLowerCase().indexOf(filterName.toLowerCase()) !== -1 ||
+            user.contact_no.indexOf(filterName) !== -1
+        );
+    }
+
+    if (filterCity !== 'all') {
+        console.log("allResaleRequest",inputData)
+        console.log("filterCity",filterCity)
+        inputData = inputData?.filter((item) => item?.city?.toLowerCase() === filterCity);
+    }
+
 
     return inputData;
 }

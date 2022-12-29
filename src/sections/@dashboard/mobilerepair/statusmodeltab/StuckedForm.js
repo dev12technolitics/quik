@@ -12,7 +12,6 @@ import * as Yup from 'yup';
 import FormProvider, {
     RHFTextField
 } from '../../../../components/hook-form';
-import { putCity } from "../../../../redux/slices/city";
 import { useDispatch } from "../../../../redux/store";
 
 const LabelStyle = styled(Typography)(({ theme }) => ({
@@ -26,7 +25,7 @@ StuckedForm.propTypes = {
     oneposts: PropTypes.object,
 };
 
-export default function StuckedForm({ oneCity, id, onCancel }) {
+export default function StuckedForm({ id, onCancel }) {
     const { push } = useRouter();
 
     const dispatch = useDispatch();
@@ -34,7 +33,7 @@ export default function StuckedForm({ oneCity, id, onCancel }) {
     const [isLoading, setisLoading] = useState(false);
 
     const NewProductSchema = Yup.object().shape({
-        // stucked_comment: Yup.string().required('Comment is required'),
+        stucked_comment: Yup.string().required('Comment is required'),
     });
 
     const defaultValues = {
@@ -59,17 +58,17 @@ export default function StuckedForm({ oneCity, id, onCancel }) {
 
     const onSubmit = async (data) => {
         setisLoading(true);
-        try {
-            await new Promise((resolve) => setTimeout(resolve, 500));
-            const payload = {
-                stucked_comment: data.stucked_comment
-            };
-            dispatch(putCity(id, payload, toast, push, reset, setisLoading));
-        }
-        catch (error) {
-            console.error(error);
-        }
-    }
+        const payload = {
+            stucked_comment: data.stucked_comment,
+            user_id :id,
+        };
+        const response = await axios.post('/mobilestatus/add', payload);
+        setisLoading(false);
+        toast.success(response.data?.message);
+        reset()
+        onCancel()
+        push('/dashboard/mobilerepair/');
+    };
 
     return (
         <FormProvider methods={methods} onSubmit={handleSubmit(onSubmit)} >
@@ -85,13 +84,6 @@ export default function StuckedForm({ oneCity, id, onCancel }) {
                                     Add Now
                                 </LoadingButton>
                             </DialogActions>
-
-                            {/* <DialogActions>
-                                    <Box sx={{ flexGrow: 1 }} />
-                                    <Button variant="outlined" color="inherit" onClick={onCancel}>
-                                        Cancel
-                                    </Button>
-                                </DialogActions> */}
 
                         </Stack>
                     </Box>

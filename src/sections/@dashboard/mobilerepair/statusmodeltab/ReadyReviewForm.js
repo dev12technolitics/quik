@@ -6,7 +6,7 @@ import { Box, DialogActions, Grid, Stack, Typography } from '@mui/material';
 import { styled } from '@mui/material/styles';
 import { useRouter } from 'next/router';
 import PropTypes from 'prop-types';
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { toast, ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
@@ -14,7 +14,6 @@ import * as Yup from 'yup';
 import FormProvider, {
     RHFTextField
 } from '../../../../components/hook-form';
-import { putCity } from "../../../../redux/slices/city";
 import { useDispatch } from "../../../../redux/store";
 
 const LabelStyle = styled(Typography)(({ theme }) => ({
@@ -28,7 +27,7 @@ ReadyReviewForm.propTypes = {
     oneposts: PropTypes.object,
 };
 
-export default function ReadyReviewForm({ oneCity, id, onCancel }) {
+export default function ReadyReviewForm({ id, onCancel }) {
     const { push } = useRouter();
 
     const dispatch = useDispatch();
@@ -36,11 +35,11 @@ export default function ReadyReviewForm({ oneCity, id, onCancel }) {
     const [isLoading, setisLoading] = useState(false);
 
     const NewProductSchema = Yup.object().shape({
-        city_name: Yup.string().required('City Name is required'),
+        ready_comment: Yup.string().required('Comment is required'),
     });
 
     const defaultValues = {
-        city_name: '',
+        ready_comment: '',
     };
 
     const methods = useForm({
@@ -59,27 +58,20 @@ export default function ReadyReviewForm({ oneCity, id, onCancel }) {
 
     const values = watch();
 
-    useEffect(() => {
-        if (oneCity) {
-            reset(defaultValues);
-        } else {
-            reset(defaultValues);
-        }
-    }, [oneCity]);
 
     const onSubmit = async (data) => {
         setisLoading(true);
-        try {
-            await new Promise((resolve) => setTimeout(resolve, 500));
-            const payload = {
-                city_name: data.city_name
-            };
-            dispatch(putCity(id, payload, toast, push, reset, setisLoading));
-        }
-        catch (error) {
-            console.error(error);
-        }
-    }
+        const payload = {
+            ready_comment: data.ready_comment,
+            user_id :id,
+        };
+        const response = await axios.post('/mobilestatus/add', payload);
+        setisLoading(false);
+        toast.success(response.data?.message);
+        reset()
+        onCancel()
+        push('/dashboard/mobilerepair/');
+    };
 
     return (
         <FormProvider methods={methods} onSubmit={handleSubmit(onSubmit)} >

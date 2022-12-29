@@ -17,7 +17,7 @@ MobileDetail.propTypes = {
     currentUser: PropTypes.object,
 };
 
-export default function MobileDetail({ MobileData , id}) {
+export default function MobileDetail({ MobileData , id}) { 
     const { push } = useRouter();
     const dispatch = useDispatch();
 

@@ -14,6 +14,7 @@ import { PATH_DASHBOARD } from '../../../routes/paths';
 import DashboardLayout from '../../../layouts/dashboard';
 // components
 import 'react-toastify/dist/ReactToastify.css';
+import { getCity } from '../../../../src/redux/slices/city';
 import CustomBreadcrumbs from '../../../components/custom-breadcrumbs';
 import Scrollbar from '../../../components/scrollbar';
 import { useSettingsContext } from '../../../components/settings';
@@ -27,7 +28,7 @@ import {
 } from '../../../redux/slices/calendar';
 import { getlaptoprepair } from '../../../redux/slices/laptoprepair';
 import { useDispatch, useSelector } from '../../../redux/store';
-import { LaptoprepairForm, LaptoprepairTableRow } from '../../../sections/@dashboard/laptoprepair';
+import { LaptoprepairForm, LaptoprepairTableRow, LaptopTableToolbar } from '../../../sections/@dashboard/laptoprepair';
 
 const TABLE_HEAD = [
     { id: 'index', label: 'SNO', align: 'left' },
@@ -37,6 +38,15 @@ const TABLE_HEAD = [
     { id: 'coupon_code', label: 'COUPON CODE', align: 'left' },
     { id: 'city', label: 'CITY', align: 'left' },
     { id: '' },
+];
+
+const headers = [
+    { label: 'Name', key: 'name' },
+    { label: 'Profile Picture', key: 'profile' },
+    { label: 'Contact Number', key: 'contact_no' },
+    { label: 'Email Id', key: 'email_id' },
+    { label: 'City', key: 'city' },
+    { label: 'Coupon Code', key: 'coupon_code' },
 ];
 
 Pcrepair.getLayout = (page) => <DashboardLayout>{page}</DashboardLayout>;
@@ -63,22 +73,22 @@ export default function Pcrepair() {
 
     const [tableData, setTableData] = useState([]);
 
-    const [openConfirm, setOpenConfirm] = useState(false);
-
     const [filterName, setFilterName] = useState('');
 
-    const [filterRole, setFilterRole] = useState('all');
+    const [filterCity, setFilterCity] = useState('all')
 
-    const [filterStatus, setFilterStatus] = useState('all');
+    const [getDownload, setGetDownload] = useState([]);
 
     const dispatch = useDispatch();
 
     const { push } = useRouter();
 
     const { isLoading, allLaptoprepair } = useSelector((state) => state.laptoprepair);
+    const { allCity } = useSelector((state) => state?.city);
 
     useEffect(() => {
         dispatch(getlaptoprepair());
+        dispatch(getCity());
     }, [dispatch]);
 
     useEffect(() => {
@@ -87,30 +97,24 @@ export default function Pcrepair() {
         }
     }, [allLaptoprepair]);
 
+    useEffect(() => {
+        setGetDownload(allLaptoprepair);
+    }, [allLaptoprepair]);
+
     const dataFiltered = applyFilter({
         inputData: tableData,
         comparator: getComparator(order, orderBy),
         filterName,
-        filterRole,
-        filterStatus,
+        filterCity,
     });
 
     const dataInPage = dataFiltered.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage);
 
     const denseHeight = dense ? 52 : 72;
 
-    const isFiltered = filterName !== '' || filterRole !== 'all' || filterStatus !== 'all';
-
     const isNotFound =
         (!dataFiltered.length && !!filterName) || (!isLoading && !dataFiltered.length) ||
-        (!dataFiltered.length && !!filterRole) ||
-        (!dataFiltered.length && !!filterStatus);
-
-
-    const handleFilterName = (event) => {
-        setPage(0);
-        setFilterName(event.target.value);
-    };
+        (!dataFiltered.length && !!filterCity);
 
     const [onChangeData, setOnChangeData] = useState({});
 
@@ -127,6 +131,15 @@ export default function Pcrepair() {
             remarks: value?.remarks || "",
         })
         dispatch(onOpenModal());
+    };
+
+    const handleFilterName = (event) => {
+        setPage(0);
+        setFilterName(event.target.value);
+    };
+
+    const handleFilterCity = (event) => {
+        setFilterCity(event.target.value);
     };
 
     return (
@@ -146,6 +159,17 @@ export default function Pcrepair() {
                 />
 
                 <Card>
+
+                    <LaptopTableToolbar
+                        filterName={filterName}
+                        onFilterName={handleFilterName}
+                        filterCity={filterCity}
+                        optionsCity={allCity}
+                        onFilterCity={handleFilterCity}
+                        headers={headers}
+                        getDownload={getDownload}
+                    />
+
                     <TableContainer sx={{ position: 'relative', overflow: 'unset' }}>
                         <Scrollbar>
                             <Table size={dense ? 'small' : 'medium'} sx={{ minWidth: 800 }}>
@@ -213,7 +237,7 @@ export default function Pcrepair() {
 
 // ----------------------------------------------------------------------
 
-function applyFilter({ inputData, comparator, filterName, filterStatus, filterRole }) {
+function applyFilter({ inputData, comparator, filterName, filterCity }) {
     const stabilizedThis = inputData.map((el, index) => [el, index]);
 
     stabilizedThis.sort((a, b) => {
@@ -226,12 +250,17 @@ function applyFilter({ inputData, comparator, filterName, filterStatus, filterRo
 
     inputData = stabilizedThis.map((el) => el[0]);
 
-    // if (filterName) {
-    //     inputData = inputData.filter((user) =>
-    //         user.name?.toLowerCase().indexOf(filterName.toLowerCase()) !== -1 ||
-    //         user.city?.toLowerCase().indexOf(filterName.toLowerCase()) !== -1
-    //     );
-    // }
+    if (filterName) {
+        inputData = inputData.filter((user) =>
+            user.name?.toLowerCase().indexOf(filterName.toLowerCase()) !== -1 ||
+            user.email_id?.toLowerCase().indexOf(filterName.toLowerCase()) !== -1 ||
+            user.contact_no.indexOf(filterName) !== -1
+        );
+    }
+
+    if (filterCity !== 'all') {
+        inputData = inputData?.filter((item) => item?.city.toLowerCase() === filterCity);
+    }
 
     return inputData;
 }

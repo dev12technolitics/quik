@@ -18,13 +18,13 @@ import {
 
 MobileRepairTableRow.propTypes = {
   row: PropTypes.object,
-  index: PropTypes.number,
+  index: PropTypes.number, 
 };
 
 export default function MobileRepairTableRow({ row, index, onDetailRow }) {
   const theme = useTheme();
   const dispatch = useDispatch();
-  const { service_id, name, contact_no, locality, city, status, model_no, date_time, _id } = row;
+  const { service_id, name, contact_no, locality,city, city_name, status, model_no, date_time, _id } = row;
 
   console.log("row123", row)
 
@@ -94,8 +94,7 @@ export default function MobileRepairTableRow({ row, index, onDetailRow }) {
         <TableCell align="left">{index + 1}</TableCell>
 
         <TableCell align="left">{service_id}</TableCell>
-
-
+        
         <TableCell align="left" sx={{ cursor: 'pointer' }} onClick={() => onDetailRow()} >
           {name}
         </TableCell>
@@ -104,8 +103,8 @@ export default function MobileRepairTableRow({ row, index, onDetailRow }) {
 
         <TableCell align="left">{moment(date_time).format('DD MMM YYYY, h:mm:ss a')}</TableCell>
 
+        {/* <TableCell align="left">{city_name[0]?.city_name}</TableCell> */}
         <TableCell align="left">{city}</TableCell>
-
         <TableCell align="left">{locality}</TableCell>
 
         <TableCell align="left">
@@ -118,17 +117,13 @@ export default function MobileRepairTableRow({ row, index, onDetailRow }) {
             sx={{ height: '40px', width: 120 }}
           >
             <MenuItem value={'Open'} onClick={() => onSubmit('Open')} >Open</MenuItem>
-
             <MenuItem value={'Pickup Agent Assigned'} onClick={() => handleAddEvent('Pickup Agent Assigned')} >Pickup Agent Assigned</MenuItem>
             <MenuItem value={'Repairing'} onClick={() => handleAddEvent('Repairing')}>Repairing</MenuItem>
             <MenuItem value={'Stucked'} onClick={() => handleAddEvent('Stucked')}>Stucked</MenuItem>
             <MenuItem value={'On Review'} onClick={() => handleAddEvent('On Review')}>On Review</MenuItem>
             <MenuItem value={'Ready To Review'} onClick={() => handleAddEvent('Ready To Review')}>Ready To Review</MenuItem>
-
             <MenuItem value={'Delivered'} onClick={() => onSubmit('Delivered')} >Delivered</MenuItem>
-
             <MenuItem value={'Canceled'} onClick={() => handleAddEvent('Canceled')}>Canceled</MenuItem>
-
             <MenuItem value={'Reopen'} onClick={() => onSubmit('Reopen')}>Reopen</MenuItem>
           </Select>
         </TableCell>
@@ -149,7 +144,7 @@ export default function MobileRepairTableRow({ row, index, onDetailRow }) {
 
       {statusfor == 'Repairing' ?
         <Dialog fullWidth maxWidth="md" open={openModal} onClose={handleCloseModal}>
-          <DialogTitle>Select a service manager for ({city})</DialogTitle>
+          <DialogTitle>Select a service manager for ({city_name[0].city_name})</DialogTitle>
           <RepairingForm
             mobilerepaircity={city}
             onCancel={handleCloseModal}
@@ -159,7 +154,7 @@ export default function MobileRepairTableRow({ row, index, onDetailRow }) {
 
       {statusfor == 'Stucked' ?
         <Dialog fullWidth maxWidth="md" open={openModal} onClose={handleCloseModal}>
-          <DialogTitle>Details</DialogTitle>
+          <DialogTitle>Stucked</DialogTitle>
           <StuckedForm
             onCancel={handleCloseModal}
           />
@@ -169,7 +164,7 @@ export default function MobileRepairTableRow({ row, index, onDetailRow }) {
 
       {statusfor == 'On Review' ?
         <Dialog fullWidth maxWidth="md" open={openModal} onClose={handleCloseModal}>
-          <DialogTitle>Details</DialogTitle>
+          <DialogTitle>On Review</DialogTitle>
           <OnReviewForm
             onCancel={handleCloseModal}
           />
@@ -178,7 +173,7 @@ export default function MobileRepairTableRow({ row, index, onDetailRow }) {
 
       {statusfor == 'Ready To Review' ?
         <Dialog fullWidth maxWidth="md" open={openModal} onClose={handleCloseModal}>
-          <DialogTitle>Details</DialogTitle>
+          <DialogTitle>Ready To Review</DialogTitle>
           <ReadyReviewForm
             onCancel={handleCloseModal}
           />
@@ -188,7 +183,7 @@ export default function MobileRepairTableRow({ row, index, onDetailRow }) {
 
       {statusfor == 'Canceled' ?
         <Dialog fullWidth maxWidth="md" open={openModal} onClose={handleCloseModal}>
-          <DialogTitle>Details</DialogTitle>
+          <DialogTitle>Canceled</DialogTitle>
           <CanceledForm
             onCancel={handleCloseModal}
           />

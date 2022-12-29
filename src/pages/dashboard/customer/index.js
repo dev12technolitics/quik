@@ -14,6 +14,7 @@ import { PATH_DASHBOARD } from '../../../routes/paths';
 // layouts
 import DashboardLayout from '../../../layouts/dashboard';
 // components
+import { getCity } from '../../../../src/redux/slices/city';
 import { getCustomer } from '../../../../src/redux/slices/customer';
 import CustomBreadcrumbs from '../../../components/custom-breadcrumbs';
 import Iconify from '../../../components/iconify';
@@ -25,7 +26,7 @@ import {
     TableSkeleton, useTable
 } from '../../../components/table';
 import { useDispatch, useSelector } from '../../../redux/store';
-import { CustomerTableRow } from '../../../sections/@dashboard/customer';
+import { CustomerTableRow, CustomerTableToolbar } from '../../../sections/@dashboard/customer';
 
 const TABLE_HEAD = [
     { id: 'index', label: 'Sno', align: 'left' },
@@ -35,7 +36,13 @@ const TABLE_HEAD = [
     { id: 'city', label: 'City', align: 'left' },
     { id: '' },
 ];
-
+const headers = [
+    { label: 'Name', key: 'name' },
+    { label: 'Eamil Id', key: 'eamil_id' },
+    { label: 'Contact Number', key: 'contact_no' },
+    { label: 'City', key: 'city' },
+    { label: 'Status', key: 'status' },
+];
 Customer.getLayout = (page) => <DashboardLayout>{page}</DashboardLayout>;
 
 export default function Customer() {
@@ -60,22 +67,22 @@ export default function Customer() {
 
     const [tableData, setTableData] = useState([]);
 
-    const [openConfirm, setOpenConfirm] = useState(false);
-
     const [filterName, setFilterName] = useState('');
 
-    const [filterRole, setFilterRole] = useState('all');
+    const [filterCity, setFilterCity] = useState('all')
 
-    const [filterStatus, setFilterStatus] = useState('all');
+    const [getDownload, setGetDownload] = useState([]);
 
     const dispatch = useDispatch();
 
     const { push } = useRouter();
     
     const { isLoading, allCustomer } = useSelector((state) => state?.customer);
+    const { allCity } = useSelector((state) => state?.city);
 
     useEffect(() => {
         dispatch(getCustomer());
+        dispatch(getCity());
     }, [dispatch]);
 
     useEffect(() => {
@@ -84,35 +91,38 @@ export default function Customer() {
         }
       }, [allCustomer]);
 
+      useEffect(() => {
+        setGetDownload(allCustomer);
+    }, [allCustomer]);
+
     const dataFiltered = applyFilter({
         inputData: tableData,
         comparator: getComparator(order, orderBy),
         filterName,
-        filterRole,
-        filterStatus,
+        filterCity
     });
 
     const dataInPage = dataFiltered.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage);
 
     const denseHeight = dense ? 52 : 72;
 
-    const isFiltered = filterName !== '' || filterRole !== 'all' || filterStatus !== 'all';
 
     const isNotFound =
         (!dataFiltered.length && !!filterName) || (!isLoading && !dataFiltered.length) ||
-        (!dataFiltered.length && !!filterRole) ||
-        (!dataFiltered.length && !!filterStatus);
+        (!dataFiltered.length && !!filterCity);
 
+    const handleEditRow = (id) => {
+        push(`/dashboard/customer/add/${id}`);
+    };
 
     const handleFilterName = (event) => {
         setPage(0);
         setFilterName(event.target.value);
     };
 
-    const handleEditRow = (id) => {
-        push(`/dashboard/customer/add/${id}`);
+    const handleFilterCity = (event) => {
+        setFilterCity(event.target.value);
     };
-
     return (
         <>
             <Head>
@@ -137,6 +147,15 @@ export default function Customer() {
                 />
 
                 <Card>
+                <CustomerTableToolbar
+                        filterName={filterName}
+                        onFilterName={handleFilterName}
+                        filterCity={filterCity}
+                        optionsCity={allCity}
+                        onFilterCity={handleFilterCity}
+                        headers={headers}
+                        getDownload={getDownload}
+                    />
                     <TableContainer sx={{ position: 'relative', overflow: 'unset' }}>
                         <Scrollbar>
                             <Table size={dense ? 'small' : 'medium'} sx={{ minWidth: 800 }}>
@@ -195,7 +214,7 @@ export default function Customer() {
 
 // ----------------------------------------------------------------------
 
-function applyFilter({ inputData, comparator, filterName, filterStatus, filterRole }) {
+function applyFilter({ inputData, comparator, filterName, filterCity }) {
     const stabilizedThis = inputData.map((el, index) => [el, index]);
 
     stabilizedThis.sort((a, b) => {
@@ -208,12 +227,18 @@ function applyFilter({ inputData, comparator, filterName, filterStatus, filterRo
 
     inputData = stabilizedThis.map((el) => el[0]);
 
-    // if (filterName) {
-    //     inputData = inputData.filter((user) =>
-    //         user.name?.toLowerCase().indexOf(filterName.toLowerCase()) !== -1 ||
-    //         user.city?.toLowerCase().indexOf(filterName.toLowerCase()) !== -1
-    //     );
-    // }
+    
+    if (filterName) {
+        inputData = inputData.filter((user) =>
+          user.name?.toLowerCase().indexOf(filterName.toLowerCase()) !== -1 ||
+          user.eamil_id?.toLowerCase().indexOf(filterName.toLowerCase()) !== -1 ||
+          user.contact_no?.indexOf(filterName) !== -1
+        );
+      }
+    
+    if (filterCity !== 'all') {
+        inputData = inputData?.filter((item) => item?.city === filterCity);
+    }
 
     return inputData;
 }

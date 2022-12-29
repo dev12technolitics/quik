@@ -148,7 +148,33 @@ function OrderItem({ item, isLast }) {
     <TimelineItem>
       <TimelineSeparator>
 
-        <TimelineDot
+     
+            { status == 'Repairing' ? (
+               <TimelineDot color="success" />
+            ) : status == 'Pickup Agent Assigned' ? (
+              <TimelineDot color="error" />
+           ) : status == 'Open' ? (
+             <TimelineDot color="warning" />
+            ) : status == 'Stucked' ? (
+              <TimelineDot color="info" />
+            ) : status == 'On Review' ? (
+              <TimelineDot color="error" />
+           ) : status == 'Ready To Review' ? (
+             <TimelineDot color="warning" />
+            ) :  status == 'Delivered' ? (
+              <TimelineDot color="error" />
+           ) : status == 'Canceled' ? (
+             <TimelineDot color="warning" />
+            ) : status == 'Reopen' ? (
+              <TimelineDot color="warning" />
+             ) :(
+             <TimelineDot />
+            )}
+
+
+           <TimelineConnector /> 
+
+        {/* <TimelineDot
           color={
             (type === 'order1' && 'primary') ||
             (type === 'order2' && 'success') ||
@@ -156,7 +182,7 @@ function OrderItem({ item, isLast }) {
             (type === 'order4' && 'warning') ||
             'error'
           }
-        />
+        /> */}
 
         {isLast ? null : <TimelineConnector />}
       </TimelineSeparator>
@@ -189,10 +215,10 @@ function OrderItem({ item, isLast }) {
            <Typography variant="subtitle2">{stucked_comment}</Typography>
         : null }
 
-<Typography variant="caption" sx={{ color: 'text.secondary' }}>
+        <Typography variant="caption" sx={{ color: 'text.secondary' }}>
           {user[0].name}
         </Typography>
-
+        <br/>
         <Typography variant="caption" sx={{ color: 'text.secondary' }}>
           {fDateTime(updated_at)}
         </Typography>

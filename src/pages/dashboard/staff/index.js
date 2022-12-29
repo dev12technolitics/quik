@@ -3,7 +3,7 @@ import { useEffect, useState } from 'react';
 import Head from 'next/head';
 import NextLink from 'next/link';
 import { useRouter } from 'next/router';
- 
+
 // @mui
 import {
     Button, Card, Container, Table, TableBody, TableContainer
@@ -12,8 +12,7 @@ import {
 import { PATH_DASHBOARD } from '../../../routes/paths';
 // _mock_
 // layouts
-import DashboardLayout from '../../../layouts/dashboard';
-// components
+import { getCity } from '../../../../src/redux/slices/city';
 import { getstaff } from '../../../../src/redux/slices/staff';
 import CustomBreadcrumbs from '../../../components/custom-breadcrumbs';
 import Iconify from '../../../components/iconify';
@@ -24,6 +23,7 @@ import {
     TableHeadCustom, TableNoData, TablePaginationCustom,
     TableSkeleton, useTable
 } from '../../../components/table';
+import DashboardLayout from '../../../layouts/dashboard';
 import { useDispatch, useSelector } from '../../../redux/store';
 import { StaffTableRow, StaffTableToolbar } from '../../../sections/@dashboard/staff';
 
@@ -33,11 +33,19 @@ const TABLE_HEAD = [
     { id: 'profile', label: 'Profile', align: 'left' },
     { id: 'contact_no', label: 'Contact No', align: 'left' },
     { id: 'designation', label: 'Designation', align: 'left' },
-    { id: 'city', label: 'City', align: 'left' , width:"100px" },
+    { id: 'city', label: 'City', align: 'left', width: "100px" },
     { id: '', label: 'Status', align: 'left' },
     { id: '' },
 ];
 
+const headers = [
+    { label: 'Name', key: 'name' },
+    { label: 'Profile Picture', key: 'profile' },
+    { label: 'Contact Number', key: 'contact_no' },
+    { label: 'Designation', key: 'designation' },
+    { label: 'City', key: 'city_name[0].city_name' },
+    { label: 'Status', key: 'status' },
+];
 
 Staff.getLayout = (page) => <DashboardLayout>{page}</DashboardLayout>;
 
@@ -63,51 +71,51 @@ export default function Staff() {
 
     const [tableData, setTableData] = useState([]);
 
-    const [openConfirm, setOpenConfirm] = useState(false);
-
     const [filterName, setFilterName] = useState('');
 
-    const [filterRole, setFilterRole] = useState('all');
-
-    const [filterStatus, setFilterStatus] = useState('all');
+    const [filterCity, setFilterCity] = useState('all')
 
     const [getDownload, setGetDownload] = useState([]);
+
 
     const dispatch = useDispatch();
 
     const { push } = useRouter();
 
     const { isLoading, allstaff } = useSelector((state) => state?.staff);
+    const { allCity } = useSelector((state) => state?.city);
 
     useEffect(() => {
         dispatch(getstaff());
+        dispatch(getCity());
     }, [dispatch]);
 
     useEffect(() => {
         if (allstaff?.length) {
-          setTableData(allstaff);
+            setTableData(allstaff);
         }
-      }, [allstaff]);
-   
+    }, [allstaff]);
+
+    useEffect(() => {
+        setGetDownload(allstaff);
+    }, [allstaff]);
 
     const dataFiltered = applyFilter({
         inputData: tableData,
         comparator: getComparator(order, orderBy),
         filterName,
-        filterRole,
-        filterStatus,
+        filterCity,
     });
 
     const dataInPage = dataFiltered.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage);
 
     const denseHeight = dense ? 52 : 72;
 
-    const isFiltered = filterName !== '' || filterRole !== 'all' || filterStatus !== 'all';
 
     const isNotFound =
-        (!dataFiltered.length && !!filterName) || (!isLoading && !dataFiltered.length) ||
-        (!dataFiltered.length && !!filterRole) ||
-        (!dataFiltered.length && !!filterStatus);
+        (!dataFiltered.length && !!filterName) ||
+        (!isLoading && !dataFiltered.length) ||
+        (!dataFiltered.length && !!filterCity);
 
 
     const handleFilterName = (event) => {
@@ -115,12 +123,16 @@ export default function Staff() {
         setFilterName(event.target.value);
     };
 
-  
+
     const handleEditRow = (id) => {
         push(`/dashboard/staff/add/${id}`);
     };
 
-    console.log("allstaff",allstaff)
+    console.log("allstaff", allstaff)
+
+    const handleFilterCity = (event) => {
+        setFilterCity(event.target.value);
+    };
 
     return (
         <>
@@ -148,8 +160,11 @@ export default function Staff() {
                     <StaffTableToolbar
                         filterName={filterName}
                         onFilterName={handleFilterName}
-                        // headers={headers}
-                        // getDownload={getDownload}
+                        filterCity={filterCity}
+                        optionsCity={allCity}
+                        onFilterCity={handleFilterCity}
+                        headers={headers}
+                        getDownload={getDownload}
                     />
 
                     <TableContainer sx={{ position: 'relative', overflow: 'unset' }}>
@@ -206,10 +221,10 @@ export default function Staff() {
         </>
     );
 }
-
+ 
 // ----------------------------------------------------------------------
 
-function applyFilter({ inputData, comparator, filterName, filterStatus, filterRole }) {
+function applyFilter({ inputData, comparator, filterName, filterCity }) {
     const stabilizedThis = inputData.map((el, index) => [el, index]);
 
     stabilizedThis.sort((a, b) => {
@@ -224,9 +239,16 @@ function applyFilter({ inputData, comparator, filterName, filterStatus, filterRo
 
     if (filterName) {
         inputData = inputData.filter((user) =>
-            user.name?.toLowerCase().indexOf(filterName.toLowerCase()) !== -1 ||
-            user.city?.toLowerCase().indexOf(filterName.toLowerCase()) !== -1
+          user.name?.toLowerCase().indexOf(filterName.toLowerCase()) !== -1 ||
+          user.designation?.toLowerCase().indexOf(filterName.toLowerCase()) !== -1 ||
+          user.contact_no.indexOf(filterName) !== -1
         );
+      }
+    
+
+
+    if (filterCity !== 'all') {
+        inputData = inputData?.filter((item) => item?.city_name === filterCity);
     }
 
     return inputData;
