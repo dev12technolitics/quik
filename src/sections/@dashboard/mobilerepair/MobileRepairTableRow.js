@@ -18,19 +18,23 @@ import {
 
 MobileRepairTableRow.propTypes = {
   row: PropTypes.object,
-  index: PropTypes.number, 
+  index: PropTypes.number,
 };
 
 export default function MobileRepairTableRow({ row, index, onDetailRow }) {
   const theme = useTheme();
   const dispatch = useDispatch();
-  const { service_id, name, contact_no, locality,city, city_name, status, model_no, date_time, _id } = row;
+  const { service_id, name, contact_no, locality, city, city_name, status, model_no, date_time, _id } = row;
 
   console.log("row123", row)
 
+  // const { allMobilerepairStatus } = useSelector((state) => state.mobilerepair);
+  
+  // useEffect(() => {
+  //   dispatch(getStatus());
+  // }, [dispatch]);
+
   const [statusPage, setStatusPage] = useState(null);
-
-
   const [statusfor, setStatusfor] = useState();
 
   useEffect(() => {
@@ -60,12 +64,11 @@ export default function MobileRepairTableRow({ row, index, onDetailRow }) {
   };
 
   const onSubmit = async (value) => {
-    
-    console.log("value",_id)
+    console.log("value", _id)
     setStatusPage(value);
     const payload = {
       status: value,
-      user_id:_id,
+      user_id: _id,
     };
     const response = await axios.post('/mobilestatus/add', payload);
     toast.success(response.data?.message);
@@ -85,7 +88,7 @@ export default function MobileRepairTableRow({ row, index, onDetailRow }) {
     dispatch(onOpenModal());
   };
 
-  console.log("id",_id)
+  console.log("id", _id)
 
   return (
     <>
@@ -94,7 +97,7 @@ export default function MobileRepairTableRow({ row, index, onDetailRow }) {
         <TableCell align="left">{index + 1}</TableCell>
 
         <TableCell align="left">{service_id}</TableCell>
-        
+
         <TableCell align="left" sx={{ cursor: 'pointer' }} onClick={() => onDetailRow()} >
           {name}
         </TableCell>

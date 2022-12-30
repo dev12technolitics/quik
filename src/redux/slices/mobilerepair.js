@@ -6,6 +6,7 @@ const initialState = {
   isLoading: false,
   error: null,
   allMobileRepair: [],
+  allStatus: [],
   oneMobilerepair: {},
 };
 
@@ -39,6 +40,12 @@ const slice = createSlice({
       state.allMobileRepair = action.payload;
     },
 
+    // GET mobile repair STATUS
+    getStatusSuccess(state, action) {
+      state.isLoading = false;
+      state.allStatus = action.payload;
+    },
+
     getOneMobilerepairSuccess(state, action) {
       state.isLoading = false;
       state.oneMobilerepair = action.payload;
@@ -55,6 +62,20 @@ export function getMobilerepair() {
     try {
       const response = await axios.get('/mobilerepair/all', { headers: header });
       dispatch(slice.actions.getMobilerepairSuccess(response.data.mobilerepair));
+    } catch (error) {
+      dispatch(slice.actions.hasError(error));
+    }
+  };
+}
+
+
+// GET mobile repair STATUS
+export function getStatus() {
+  return async () => {
+    dispatch(slice.actions.startLoading());
+    try {
+      const response = await axios.get('/mobilestatus/all', { headers: header });
+      dispatch(slice.actions.getStatusSuccess(response.data.mobilestatus));
     } catch (error) {
       dispatch(slice.actions.hasError(error));
     }
