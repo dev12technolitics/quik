@@ -246,7 +246,6 @@ function applyFilter({ inputData, comparator, filterName, filterCity }) {
         return a[1] - b[1];
     });
 
-    console.log("inputData:", inputData);
 
     inputData = stabilizedThis.map((el) => el[0]);
 
@@ -259,7 +258,9 @@ function applyFilter({ inputData, comparator, filterName, filterCity }) {
     }
 
     if (filterCity !== 'all') {
-        inputData = inputData?.filter((item) => item?.city.toLowerCase() === filterCity);
+        console.log("filterCity",filterCity)
+        inputData = inputData?.filter((item) => item?.city?.toLowerCase().replaceAll(" ", "") == filterCity.toLowerCase().replaceAll(" ", ""));
+        console.log("filterCity",inputData)
     }
 
     return inputData;

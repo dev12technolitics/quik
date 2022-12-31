@@ -70,11 +70,11 @@ export function getMobilerepair() {
 
 
 // GET mobile repair STATUS
-export function getStatus() {
+export function getStatus(itemId) {
   return async () => {
     dispatch(slice.actions.startLoading());
     try {
-      const response = await axios.get('/mobilestatus/all', { headers: header });
+      const response = await axios.get('/mobilestatus/all' + itemId, { headers: header });
       dispatch(slice.actions.getStatusSuccess(response.data.mobilestatus));
     } catch (error) {
       dispatch(slice.actions.hasError(error));

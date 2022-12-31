@@ -1,13 +1,10 @@
 import { useEffect, useState } from 'react';
 // next
 import Head from 'next/head';
-import NextLink from 'next/link';
 import { useRouter } from 'next/router';
  
 // @mui
-import {
-    Button, Card, Container, Table, TableBody, TableContainer
-} from '@mui/material';
+import { Card, Container, Table, TableBody, TableContainer } from '@mui/material';
 // routes
 import { PATH_DASHBOARD } from '../../../routes/paths';
 // _mock_
@@ -17,7 +14,6 @@ import DashboardLayout from '../../../layouts/dashboard';
 import { getCity } from '../../../../src/redux/slices/city';
 import { getCustomer } from '../../../../src/redux/slices/customer';
 import CustomBreadcrumbs from '../../../components/custom-breadcrumbs';
-import Iconify from '../../../components/iconify';
 import Scrollbar from '../../../components/scrollbar';
 import { useSettingsContext } from '../../../components/settings';
 import {
@@ -31,14 +27,16 @@ import { CustomerTableRow, CustomerTableToolbar } from '../../../sections/@dashb
 const TABLE_HEAD = [
     { id: 'index', label: 'Sno', align: 'left' },
     { id: 'name', label: 'Name', align: 'left' },
-    { id: 'eamil_id', label: 'Email Id', align: 'left' },
+    { id: 'email_id', label: 'Email Id', align: 'left' },
     { id: 'contact_no', label: 'Contact No.', align: 'left' },
     { id: 'city', label: 'City', align: 'left' },
+    { id: 'locality', label: 'Locality', align: 'left' },
+    { id: 'address', label: 'Address', align: 'left' },
     { id: '' },
 ];
 const headers = [
     { label: 'Name', key: 'name' },
-    { label: 'Eamil Id', key: 'eamil_id' },
+    { label: 'Eamil Id', key: 'email_id' },
     { label: 'Contact Number', key: 'contact_no' },
     { label: 'City', key: 'city' },
     { label: 'Status', key: 'status' },
@@ -111,10 +109,7 @@ export default function Customer() {
         (!dataFiltered.length && !!filterName) || (!isLoading && !dataFiltered.length) ||
         (!dataFiltered.length && !!filterCity);
 
-    const handleEditRow = (id) => {
-        push(`/dashboard/customer/add/${id}`);
-    };
-
+   
     const handleFilterName = (event) => {
         setPage(0);
         setFilterName(event.target.value);
@@ -136,14 +131,6 @@ export default function Customer() {
                         { name: 'Customer Management', href: PATH_DASHBOARD.customer.view },
                         { name: 'Customer List' }
                     ]}
-
-                    action={
-                        <NextLink href={PATH_DASHBOARD.customer.add} passHref>
-                            <Button variant="contained" startIcon={<Iconify icon="eva:plus-fill" />}>
-                                New Customer
-                            </Button>
-                        </NextLink>
-                    }
                 />
 
                 <Card>
@@ -183,7 +170,6 @@ export default function Customer() {
                                                     key={row.id}
                                                     row={row}
                                                     index={index}
-                                                    onEditRow={() => handleEditRow(row._id)}
                                                 />
                                             ) : (
                                                 !isNotFound && <TableSkeleton key={index} sx={{ height: denseHeight }} />
@@ -229,9 +215,10 @@ function applyFilter({ inputData, comparator, filterName, filterCity }) {
 
     
     if (filterName) {
+        console.log("filterName", filterName)
         inputData = inputData.filter((user) =>
           user.name?.toLowerCase().indexOf(filterName.toLowerCase()) !== -1 ||
-          user.eamil_id?.toLowerCase().indexOf(filterName.toLowerCase()) !== -1 ||
+          user.email_id?.toLowerCase().indexOf(filterName.toLowerCase()) !== -1 ||
           user.contact_no?.indexOf(filterName) !== -1
         );
       }

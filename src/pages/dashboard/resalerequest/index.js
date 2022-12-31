@@ -231,7 +231,7 @@ function applyFilter({ inputData, comparator, filterName, filterCity }) {
     if (filterCity !== 'all') {
         console.log("allResaleRequest",inputData)
         console.log("filterCity",filterCity)
-        inputData = inputData?.filter((item) => item?.city?.toLowerCase() === filterCity);
+        inputData = inputData?.filter((item) => item?.city == filterCity);
     }
 
 

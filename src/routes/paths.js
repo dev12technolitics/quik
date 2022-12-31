@@ -146,7 +146,6 @@ mobilebrand:{
 
 customer:{
   view :path(ROOTS_DASHBOARD,'/customer'),
-  add :path(ROOTS_DASHBOARD,'/customer/add'),
 },
 
 designation:{

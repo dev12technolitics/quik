@@ -5,9 +5,7 @@ import { dispatch } from '../store';
 const initialState = {
   isLoading: false,
   error: null,
-  allCustomer: [],
-  Addcustomer: {},
-  oneCustomer: {},
+  allCustomer: []
 };
 
 const accessToken = typeof window !== 'undefined' ? localStorage.getItem('accessToken') : '';
@@ -40,16 +38,7 @@ const slice = createSlice({
       state.allCustomer = action.payload;
     },
 
-    getoneCustomerSuccess(state, action) {
-      state.isLoading = false;
-      state.oneCustomer = action.payload;
-    },
-
-    // Add update customer
-    postputcustomerSuccess(state, action) {
-      state.isLoading = false;
-      state.Addcustomer = action.payload;
-    },
+   
 
   },
 });
@@ -60,62 +49,10 @@ export function getCustomer() {
   return async () => {
     dispatch(slice.actions.startLoading());
     try {
-      const response = await axios.get('//all', { headers: header });
-      dispatch(slice.actions.getCustomerSuccess(response.data));
+      const response = await axios.get('/customer/all', { headers: jsonheader });
+      dispatch(slice.actions.getCustomerSuccess(response.data.customer));
     } catch (error) {
       dispatch(slice.actions.hasError(error));
-    }
-  };
-}
-
-export function getOneCustomer(id) {
-  return async () => {
-    dispatch(slice.actions.startLoading());
-    try {
-      const response = await axios.get('//one/' + id, { headers: header });
-      dispatch(slice.actions.getoneCustomerSuccess(response.data.users));
-    } catch (error) {
-      dispatch(slice.actions.hasError(error));
-    }
-  };
-}
-
-export function postCustomer(data, toast, push, reset, setisLoading) {
-  return async () => {
-    try {
-      const response = await axios.post('//signup', data, { headers: header });
-      console.log('response==', response);
-      if (response.data?.status == true) {
-        setisLoading(false);
-        toast.success(response.data?.message);
-        push('/dashboard/staff');
-      } else {
-        setisLoading(false);
-        toast.error(response.data?.message);
-      }
-    } catch (error) {
-      setisLoading(false);
-      toast.error(error?.message);
-    }
-  };
-}
-
-
-export function putCustomer(id, data, toast, push, reset, setisLoading) {
-  return async () => {
-    try {
-      const response = await axios.put('//update/' + id, data);
-      if (response.data?.status == true) {
-        setisLoading(false);
-        toast.success(response.data?.message);
-        push('/dashboard/staff');
-      } else {
-        setisLoading(false);
-        toast.error(response.data?.message);
-      }
-    } catch (error) {
-      setisLoading(false);
-      toast.error(error?.message);
     }
   };
 }

@@ -245,10 +245,15 @@ function applyFilter({ inputData, comparator, filterName, filterCity }) {
         );
       }
     
-
+    
 
     if (filterCity !== 'all') {
-        inputData = inputData?.filter((item) => item?.city_name === filterCity);
+        console.log("filterCity", filterCity)
+        console.log("inputData1", inputData)
+        
+        inputData = inputData.filter(user => user.city_name.find(city => city.city_name === filterCity ))
+        // const city = users.filter(user => user.city_name.find(city => city.city_name === 'satna'))
+        // console.log("inputData2", city)
     }
 
     return inputData;

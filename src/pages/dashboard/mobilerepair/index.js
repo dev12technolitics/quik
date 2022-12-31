@@ -92,10 +92,13 @@ export default function Mobilerepair() {
 
     const { isLoading, allMobileRepair } = useSelector((state) => state.mobilerepair);
     const { allCity } = useSelector((state) => state?.city);
-
+    // const { allMobilerepairStatus } = useSelector((state) => state.mobilerepair);
+  
+ 
     useEffect(() => {
         dispatch(getMobilerepair());
         dispatch(getCity());
+        // dispatch(getStatus());
     }, [dispatch]);
 
     useEffect(() => {
@@ -245,7 +248,7 @@ function applyFilter({ inputData, comparator, filterName, filterCity }) {
     }
 
     if (filterCity !== 'all') {
-        inputData = inputData?.filter((item) => item?.city_name[0]?.city_name.toLowerCase() === filterCity);
+        inputData = inputData?.filter((item) => item?.city === filterCity);
     }
 
     return inputData;

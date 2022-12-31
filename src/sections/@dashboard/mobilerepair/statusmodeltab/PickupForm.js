@@ -33,7 +33,7 @@ export default function PickupForm({ mobilerepaircity, id, onCancel, statusPage 
     console.log("mobilerepaircity", mobilerepaircity)
 
     const { push } = useRouter();
-
+ 
     const dispatch = useDispatch();
 
     const [isLoading, setisLoading] = useState(false);
@@ -87,11 +87,11 @@ export default function PickupForm({ mobilerepaircity, id, onCancel, statusPage 
         const payload = {
             pickup: data.pickup,
             status: statusPage,
-            user_id: id,
+            mobileId: id,
         };
         console.log("payload", payload)
         const response = await axios.post('/mobilestatus/add', payload);
-        console.log("response", response)
+        console.log("response123", response)
         setisLoading(false);
         toast.success(response.data?.message);
         reset()

@@ -1,94 +1,89 @@
-import { Dialog, DialogTitle, MenuItem, TableCell, TableRow } from '@mui/material';
-import Select from '@mui/material/Select';
+import {
+  TableCell, TableRow
+} from '@mui/material';
+// import Select from '@mui/material/Select';
 import { useTheme } from '@mui/material/styles';
 import moment from 'moment';
 import PropTypes from 'prop-types';
-import { useEffect, useState } from 'react';
-import { toast } from 'react-toastify';
-import 'react-toastify/dist/ReactToastify.css';
-import {
-  onCloseModal, onOpenModal
-} from '../../../redux/slices/calendar';
-import { useDispatch, useSelector } from '../../../redux/store';
-import axios from '../../../utils/axios';
-import {
-  CanceledForm, OnReviewForm, PickupForm, ReadyReviewForm, RepairingForm,
-  StuckedForm
-} from './statusmodeltab';
+// import { useEffect, useState } from 'react';
+// import { toast } from 'react-toastify';
+// import 'react-toastify/dist/ReactToastify.css';
+// import {
+//   onCloseModal, onOpenModal
+// } from '../../../redux/slices/calendar';
+// import { useDispatch, useSelector } from '../../../redux/store';
+// import axios from '../../../utils/axios';
+// import {
+//   CanceledForm, OnReviewForm, PickupForm, ReadyReviewForm, RepairingForm,
+//   StuckedForm
+// } from './statusmodeltab';
 
+import TestingStatus from './TestingStatus';
 MobileRepairTableRow.propTypes = {
   row: PropTypes.object,
   index: PropTypes.number,
 };
 
 export default function MobileRepairTableRow({ row, index, onDetailRow }) {
+
   const theme = useTheme();
-  const dispatch = useDispatch();
+  // const dispatch = useDispatch();
   const { service_id, name, contact_no, locality, city, city_name, status, model_no, date_time, _id } = row;
 
   console.log("row123", row)
 
-  // const { allMobilerepairStatus } = useSelector((state) => state.mobilerepair);
-  
+  // const [statusPage, setStatusPage] = useState(null);
+  // const [statusfor, setStatusfor] = useState();
+
   // useEffect(() => {
-  //   dispatch(getStatus());
-  // }, [dispatch]);
+  //   if (status == 'Open') {
+  //     setStatusPage('Open');
+  //   } else if (status == 'Pickup Agent Assigned') {
+  //     setStatusPage('Pickup Agent Assigned');
+  //   } else if (status == 'Repairing') {
+  //     setStatusPage('Repairing');
+  //   } else if (status == 'Stucked') {
+  //     setStatusPage('Stucked');
+  //   } else if (status == 'On Review') {
+  //     setStatusPage('On Review');
+  //   } else if (status == 'Ready To Review') {
+  //     setStatusPage('Ready To Review');
+  //   } else if (status == 'Delivered') {
+  //     setStatusPage('Delivered');
+  //   } else if (status == 'Canceled') {
+  //     setStatusPage('Canceled');
+  //   } else {
+  //     setStatusPage('Reopen');
+  //   }
+  // }, [status]);
 
-  const [statusPage, setStatusPage] = useState(null);
-  const [statusfor, setStatusfor] = useState();
+  // const onStatus = async (data) => {
+  //   setStatusPage(data);
+  // };
 
-  useEffect(() => {
-    if (status == 'Open') {
-      setStatusPage('Open');
-    } else if (status == 'Pickup Agent Assigned') {
-      setStatusPage('Pickup Agent Assigned');
-    } else if (status == 'Repairing') {
-      setStatusPage('Repairing');
-    } else if (status == 'Stucked') {
-      setStatusPage('Stucked');
-    } else if (status == 'On Review') {
-      setStatusPage('On Review');
-    } else if (status == 'Ready To Review') {
-      setStatusPage('Ready To Review');
-    } else if (status == 'Delivered') {
-      setStatusPage('Delivered');
-    } else if (status == 'Canceled') {
-      setStatusPage('Canceled');
-    } else {
-      setStatusPage('Reopen');
-    }
-  }, [status]);
+  // const onSubmit = async (value) => {
+  //   console.log("value", _id)
+  //   setStatusPage(value);
+  //   const payload = {
+  //     status: value,
+  //     user_id: _id,
+  //   };
+  //   const response = await axios.post('/mobilestatus/add', payload);
+  //   toast.success(response.data?.message);
+  // };
 
-  const onStatus = async (data) => {
-    setStatusPage(data);
-  };
+  // const { openModal } = useSelector((state) => state.calendar);
 
-  const onSubmit = async (value) => {
-    console.log("value", _id)
-    setStatusPage(value);
-    const payload = {
-      status: value,
-      user_id: _id,
-    };
-    const response = await axios.post('/mobilestatus/add', payload);
-    toast.success(response.data?.message);
-  };
+  // const handleCloseModal = () => {
+  //   dispatch(onCloseModal());
+  // };
 
+  // const handleAddEvent = (value) => {
+  //   setStatusfor(value)
+  //   dispatch(onOpenModal());
+  // };
 
-  // const [onChangeData, setOnChangeData] = useState({});
-
-  const { openModal } = useSelector((state) => state.calendar);
-
-  const handleCloseModal = () => {
-    dispatch(onCloseModal());
-  };
-
-  const handleAddEvent = (value) => {
-    setStatusfor(value)
-    dispatch(onOpenModal());
-  };
-
-  console.log("id", _id)
+ 
 
   return (
     <>
@@ -106,11 +101,17 @@ export default function MobileRepairTableRow({ row, index, onDetailRow }) {
 
         <TableCell align="left">{moment(date_time).format('DD MMM YYYY, h:mm:ss a')}</TableCell>
 
-        {/* <TableCell align="left">{city_name[0]?.city_name}</TableCell> */}
-        <TableCell align="left">{city}</TableCell>
+        <TableCell align="left">{city_name[0]?.city_name}</TableCell>
+
+       
         <TableCell align="left">{locality}</TableCell>
 
         <TableCell align="left">
+          <TestingStatus itemId={_id} city={city}/>
+        </TableCell>
+
+
+        {/* <TableCell align="left">
           <Select
             labelId="demo-simple-select-standard-label"
             id="demo-simple-select-standard"
@@ -129,11 +130,11 @@ export default function MobileRepairTableRow({ row, index, onDetailRow }) {
             <MenuItem value={'Canceled'} onClick={() => handleAddEvent('Canceled')}>Canceled</MenuItem>
             <MenuItem value={'Reopen'} onClick={() => onSubmit('Reopen')}>Reopen</MenuItem>
           </Select>
-        </TableCell>
+        </TableCell> */}
 
       </TableRow>
 
-      {statusfor == 'Pickup Agent Assigned' ?
+      {/* {statusfor == 'Pickup Agent Assigned' ?
         <Dialog fullWidth maxWidth="md" open={openModal} onClose={handleCloseModal}>
           <DialogTitle>Select a pickup agent for ({city}) </DialogTitle>
           <PickupForm
@@ -191,7 +192,8 @@ export default function MobileRepairTableRow({ row, index, onDetailRow }) {
             onCancel={handleCloseModal}
           />
         </Dialog>
-        : null}
+        : null} */}
     </>
   );
 }
+
